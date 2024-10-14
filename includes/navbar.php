@@ -27,45 +27,14 @@ $menuPages = ['index' => 'Home', 'shop' => 'Shop', 'why' => 'Why', 'contact' => 
   <?php
     foreach ($menuPages as $link => $page) {
   ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?php echo $link . '.php' ?>">
-              <!-- <span class="sr-only">(current)</span> -->
-                  <?php
-                  echo $page;
-                  // active menu link 
-                  if($link == $currentPage) {
-                    // echo "helo";
-                    echo '<span class="sr-only">(current)</span>';
-                  }
-                  ?>  
+            <li class="nav-item <?php if($link === $currentPage) {echo "active";} ?>">
+              <a class="nav-link"  href="<?php echo $link . '.php' ?>">
+                  <?php echo $page; ?>
               </a>
             </li>
 
   <?php } ?>
 
-
-
-            <!-- <li class="nav-item ">
-              <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="shop.php">
-                Shop
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="why.php">
-                Why Us
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="testimonial.php">
-                Testimonial
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="contact.php">Contact Us</a>
-            </li> -->
           </ul>
           <div class="user_option">
             <a href="">

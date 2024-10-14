@@ -1,11 +1,17 @@
 <?php
 error_reporting(1);
 
+include_once './vendor/autoload.php';
 include 'includes/header.php';
 
-session_start();
+use App\Controller\Product;
 
+// store current page session 
+session_start();
 $_SESSION['currentpage'] = "index";
+
+// $product = new Product();
+// print_r ($product->paginate());
 ?>
 
 <div class="hero_area">

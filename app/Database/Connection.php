@@ -11,12 +11,13 @@ class Connection {
     private $username;
     private $password;
     private $db;
+    // private $connect;
 
     function __construct() {
         $this->connect();
     }
 
-    private function connect() {
+    public function connect() {
         $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
         $dotenv->load();
 
@@ -33,7 +34,12 @@ class Connection {
             die("Database connection Failed: ". $connect->connect_error);
         }
 
-        echo "Database is connected successfullly";
+        // echo "Database is connected successfullly";
+        return $connect;
     }
+
+    // public function get() {
+    //     return $this->connect;
+    // }
 }
 

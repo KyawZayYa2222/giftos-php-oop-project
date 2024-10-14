@@ -88,6 +88,10 @@ body {
   background-color: #f4f5f6;
 }
 
+.custom-active {
+  border: #000000 2px !important;
+}
+
 #navbarSupportedContent .navbar-nav .nav-link {
   padding: 5px 25px;
   color: #514f4f;
@@ -854,3 +858,27 @@ a:focus {
 
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
+
+
+
+/* admin style  */
+
+.custom-nav {
+  padding-left: 1em;
+  padding-top: .4em;
+  padding-bottom: .4em;
+}
+
+.custom-nav .custom-nav-link {
+  text-decoration: none;
+  color: #cecece;
+  font-size: 1em !important;
+}
+
+.custom-nav .custom-nav-link.active {
+  color: #ffffff;
+}
+
+.custom-primary-color {
+  background-color: #db4566;
+}
