@@ -4,14 +4,12 @@ include_once '../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-session_start();
+// session_start();
 $currentPage = $_SESSION['admin_current_page'];
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 
-// $pages = ['index' => 'Dashboard', 'product' => 'Product'];
-// $menuIcons = ['index' => 'dashboard', 'product' => 'th'];
 
 ?>
 
@@ -28,40 +26,57 @@ $dotenv->load();
 </a>
 
 <!-- Divider -->
-<hr class="sidebar-divider mb-2">
+<hr class="sidebar-divider mb-1">
 
-<li class="custom-nav">
-    <a class="custom-nav-link <?php if($currentPage === 'index') echo 'active'; ?>" href="/admin/index.php">
+<li class="nav-item <?php if($currentPage === 'index') echo 'active'; ?>">
+    <a class="nav-link" href="/admin/index.php">
         <i class="fa fa-dashboard"></i>
         <span>Dashboard</span></a>
 </li>
 
-<li class="nav-item">
-    <a class="nav-link custom-nav-link  collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
-        <i class="fa fa-th"></i>
-        <span>Product</span>
+<hr class="sidebar-divider mb-1">
+
+<li class="nav-item <?php if($currentPage === 'category' || $currentPage === 'category_create') echo 'active'; ?>">
+    <a class="nav-link custom-nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategory"
+        aria-expanded="true" aria-controls="collapseCategory">
+        <i class="fa fa-th-large"></i>
+        <span>Category</span>
         <i class="fa fa-chevron-right ms-auto"></i>
     </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+    <div id="collapseCategory" class="collapse" aria-labelledby="headingUtilities"
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <!-- <h6 class="collapse-header">Custom Utilities:</h6> -->
-            <a class="collapse-item" href="/admin/product.php">Category</a>
-            <a class="collapse-item" href="/admin/product.php">Products</a>
-            <!-- <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a> -->
+            <a class="collapse-item <?php if($currentPage === 'category') echo 'active'; ?>" href="/admin/category.php">List</a>
+            <a class="collapse-item <?php if($currentPage === 'category_create') echo 'active'; ?>" href="/admin/category_create.php">Create</a>
         </div>
     </div>
 </li>
 
+<hr class="sidebar-divider mb-1">
 
-<li class="custom-nav">
-    <a class="custom-nav-link <?php if($currentPage === 'index') echo ''; ?>" href="/admin/index.php">
-        <i class="fa fa-dashboard"></i>
-        <span>Dashboard</span></a>
+<li class="nav-item <?php if($currentPage === 'product' || $currentPage === 'product_create') echo 'active'; ?>">
+    <a class="nav-link custom-nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
+        aria-expanded="true" aria-controls="collapseProduct">
+        <i class="fa fa-cubes"></i>
+        <span>Product</span>
+        <i class="fa fa-chevron-right ms-auto"></i>
+    </a>
+    <div id="collapseProduct" class="collapse" aria-labelledby="headingUtilities"
+        data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item <?php if($currentPage === 'product') echo 'active'; ?>" href="/admin/product.php">List</a>
+            <a class="collapse-item <?php if($currentPage === 'product_create') echo 'active'; ?>" href="/admin/product.php">Create</a>
+        </div>
+    </div>
 </li>
+
+<hr class="sidebar-divider">
+
+<!-- Sidebar Toggler (Sidebar) -->
+<div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+</div>
+
 
 </ul>
 <!-- End of Sidebar -->

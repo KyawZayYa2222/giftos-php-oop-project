@@ -882,3 +882,38 @@ a:focus {
 .custom-primary-color {
   background-color: #db4566;
 }
+
+.table-icon-img, .table-icon-img img {
+  width: 40px;
+  height: 40px;
+}
+
+/* common  */
+.err-exception-con {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #1b1b1b;
+  opacity: 90%;
+  color: red;
+  padding: 2em;
+  font-size: 1.2em;
+}
+
+.err-exception-con::before {
+  content: 'Error Exception:// ';
+  color: white;
+  font-size: 1.4em;
+}
+
+.display {
+  display: block;
+}
+
+.success-alert {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}

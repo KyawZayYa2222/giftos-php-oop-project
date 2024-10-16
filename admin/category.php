@@ -2,7 +2,7 @@
 include './includes/header.php';
 
 session_start();
-$_SESSION['admin_current_page'] = 'product';
+$_SESSION['admin_current_page'] = 'category';
 ?>
 
 
@@ -25,12 +25,33 @@ include './includes/topbar.php';
 <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Product</h1>
+<div class="d-flex mb-2 justify-content-between">
+    <h1 class="h3 text-gray-800">Category</h1>
+    <a href="/admin/category_create.php" class="btn btn-primary">Create</a>
+</div>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
+         <!-- <div class="col col-md-4">
+            <form action="">
+                <input class="form-control" type="text" placeholder="Search">
+            </form>
+         </div> -->
+
+         <form
+    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    <div class="input-group">
+        <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
+            aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+</form>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -38,9 +59,9 @@ include './includes/topbar.php';
                 <thead>
                     <tr>
                         <th width="80px">No</th>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Qty</th>
+                        <th>Category</th>
+                        <!-- <th>Price</th>
+                        <th>Qty</th> -->
                         <!-- <th>Start date</th>
                         <th>Salary</th> -->
                     </tr>
@@ -49,51 +70,13 @@ include './includes/topbar.php';
                     <tr>
                         <td>1</td>
                         <td>
-                            <span class="table-icon-img mr-2">
-                                <img src="../assets/images/gifts.png" alt="image">
-                            </span>
                             Jonas Alexander</td>
-                        <td>$220</td>
-                        <td>30</td>
+                        <!-- <td>$220</td> -->
+                        <!-- <td>30</td> -->
                         <!-- <td>2010/07/14</td>
                         <td>$86,500</td> -->
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <span class="table-icon-img mr-2">
-                                <img src="../assets/images/gifts.png" alt="image">
-                            </span>    
-                        Shad Decker</td>
-                        <td>$50</td>
-                        <td>51</td>
-                        <!-- <td>2008/11/13</td>
-                        <td>$183,000</td> -->
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                        <span class="table-icon-img mr-2">
-                                <img src="../assets/images/gifts.png" alt="image">
-                            </span>    
-                        Michael Bruce</td>
-                        <td>$120</td>
-                        <td>29</td>
-                        <!-- <td>2011/06/27</td>
-                        <td>$183,000</td> -->
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>
-                        <span class="table-icon-img mr-2">
-                                <img src="../assets/images/gifts.png" alt="image">
-                            </span>    
-                        Donna Snider</td>
-                        <td>$420</td>
-                        <td>27</td>
-                        <!-- <td>2011/01/25</td>
-                        <td>$112,000</td> -->
-                    </tr>
+                    
                 </tbody>
             </table>
 

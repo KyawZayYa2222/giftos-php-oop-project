@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Database\Connection;
 
-class Product {
+class ProductController {
     private $connect;
 
     function __construct() {
@@ -28,10 +28,6 @@ class Product {
 
         $prevPage = $page - 1;
         $nextPage = $page + 1;
-
-        // if($result->num_rows > 0) {
-        //     $rows[] = $result->fetch_assoc();
-        // }
 
         return [
             'current_page' => $page,

@@ -37,9 +37,5 @@ class Connection {
         // echo "Database is connected successfullly";
         return $connect;
     }
-
-    // public function get() {
-    //     return $this->connect;
-    // }
 }
 

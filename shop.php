@@ -4,14 +4,14 @@ error_reporting(1);
 include_once './vendor/autoload.php';
 include 'includes/header.php';
 
-use App\Controller\Product;
+use App\Controller\ProductController;
 
 // store current page session 
 session_start();
 $_SESSION['currentpage'] = "shop";
 
-$product = new Product();
-$data = $product->paginate();
+$productController = new ProductController();
+$data = $productController->paginate();
 
 ?>
 
