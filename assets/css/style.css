@@ -913,7 +913,39 @@ a:focus {
 }
 
 .success-alert {
+  z-index: 1000;
   position: absolute;
-  top: 1em;
-  right: 1em;
+  top: 0;
+  right: 2em;
+  background-color: white;
+  padding: 1em;
+  border-radius: 6px;
+  border-bottom: 6px solid rgb(57, 216, 57);
+  box-shadow: 1px 1px 10px rgb(190, 190, 190);
+  /* transform: translateX(-20px); */
+  /* animation-name: alert;
+  animation-duration: 4s; */
+  transition: all;
+  transform: translateY(2em), translateX(-10em);
+  transition-duration: 4s;
 }
+
+/* @keyframes alert {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 100;
+    transform: translateY(2em);
+  }
+  50% {
+    
+  }
+  99% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    display: none;
+  }
+} */

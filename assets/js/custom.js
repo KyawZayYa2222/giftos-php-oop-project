@@ -27,3 +27,7 @@ $('.owl-carousel').owlCarousel({
         }
     }
 })
+
+// function showAlert(message) {
+//     console.log(message);
+// }

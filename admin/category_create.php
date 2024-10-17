@@ -6,7 +6,7 @@ use App\Controller\CategoryController;
 use Rakit\Validation\Validator;
 
 session_start();
-$_SESSION['admin_current_page'] = 'category';
+$_SESSION['admin_current_page'] = 'category_create';
 
 if (isset($_POST['category_create'])) {
     $validator = new Validator();
@@ -32,6 +32,8 @@ if (isset($_POST['category_create'])) {
 <?php
 include './includes/sidebar.php';
 ?>
+
+<!-- <div class='success-alert'>Category created successful.</div> -->
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">

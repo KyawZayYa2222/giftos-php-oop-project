@@ -1,8 +1,13 @@
 <?php
 include './includes/header.php';
 
+use App\Controller\CategoryController;
+
 session_start();
 $_SESSION['admin_current_page'] = 'category';
+
+$categoryController = new CategoryController();   
+$categories = $categoryController->get();
 ?>
 
 
@@ -60,22 +65,22 @@ include './includes/topbar.php';
                     <tr>
                         <th width="80px">No</th>
                         <th>Category</th>
-                        <!-- <th>Price</th>
-                        <th>Qty</th> -->
-                        <!-- <th>Start date</th>
-                        <th>Salary</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            Jonas Alexander</td>
-                        <!-- <td>$220</td> -->
-                        <!-- <td>30</td> -->
-                        <!-- <td>2010/07/14</td>
-                        <td>$86,500</td> -->
-                    </tr>
+
+<?php
+    foreach ($categories['data'] as $key => $category) {
+        $no = $key + 1;
+        $name = $category['name'];
+        echo "<tr>
+                <td>$no</td>
+                <td>$name</td>
+            </tr>";
+    }
+
+?>
+                    
                     
                 </tbody>
             </table>

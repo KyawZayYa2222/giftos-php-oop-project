@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Database\Connection;
 use Exception;
+use App\Helper\Paginator;
+
 
 class CategoryController {
     private $connect;
@@ -12,6 +14,17 @@ class CategoryController {
         $this->connect = $connection->connect();
     }
 
+    
+    // Get 
+    public function get(int $page=1) {
+        $tableName = "categories";
+        $limit = 15;
+
+        $data = Paginator::paginate($this->connect, $tableName, $limit, $page);
+        return $data;
+    }
+
+    // Store 
     public function store($request) {
         $name = $request['name'];
 
@@ -19,10 +32,11 @@ class CategoryController {
 
         try {
             $this->connect->query($sql);
+            header("Location: category.php");
+            // echo "<div class='success-alert'>Category created successful.</div>";
+            exit();
         } catch (Exception $err) {
             echo "<div class='err-exception-con'>$err</div>";
         }
-
-        echo "<div class='success-alert'>alert('Category created successful.')</div>";
     }
 }

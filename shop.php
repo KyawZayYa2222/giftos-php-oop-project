@@ -11,7 +11,7 @@ session_start();
 $_SESSION['currentpage'] = "shop";
 
 $productController = new ProductController();
-$data = $productController->paginate();
+$products = $productController->get();
 
 ?>
 
@@ -36,9 +36,9 @@ $data = $productController->paginate();
       <div class="row">
 
       <?php
-      // print_r($data['rows']);
-foreach ($data['rows'] as $row) {
-  // print_r($row['name']);
+      // print_r($products['rows']);
+foreach ($products['data'] as $product) {
+  // print_r($product['name']);
       ?>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -49,12 +49,12 @@ foreach ($data['rows'] as $row) {
               </div>
               <div class="detail-box">
                 <h6>
-                  <?php echo $row['name'] ?>
+                  <?php echo $product['name'] ?>
                 </h6>
                 <h6>
                   Price
                   <span>
-                  <?php echo "$" . $row['price'] ?>
+                  <?php echo "$" . $product['price'] ?>
                   </span>
                 </h6>
               </div>
