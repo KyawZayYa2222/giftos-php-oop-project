@@ -24,11 +24,44 @@ class CategoryController {
         return $data;
     }
 
+    // Search 
+    public function search($search='') {
+        $sql = "SELECT * FROM categories WHERE name LIKE '%$search%'";
+
+        try {
+            $data = $this->connect->query($sql);
+            return [
+                'data' => $data
+            ];
+        } catch (Exception $err) {
+            echo "<div class='err-exception-con'>$err</div>";
+        }
+    }
+    
+
     // Store 
     public function store($request) {
         $name = $request['name'];
 
         $sql = "INSERT INTO categories (name) VALUES ('$name')";
+
+        try {
+            $this->connect->query($sql);
+            header("Location: category.php");
+            // echo "<div class='success-alert'>Category created successful.</div>";
+            exit();
+        } catch (Exception $err) {
+            echo "<div class='err-exception-con'>$err</div>";
+        }
+    }
+
+
+    // Store 
+    public function update($request) {
+        $id = $request['id'];
+        $name = $request['name'];
+
+        $sql = "UPDATE categories SET name='$name' WHERE id='$id'";
 
         try {
             $this->connect->query($sql);

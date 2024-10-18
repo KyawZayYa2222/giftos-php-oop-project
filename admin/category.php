@@ -7,7 +7,17 @@ session_start();
 $_SESSION['admin_current_page'] = 'category';
 
 $categoryController = new CategoryController();   
-$categories = $categoryController->get();
+
+if (isset($_GET['page'])) {
+    $categories = $categoryController->get($_GET['page']);
+} else {
+    $categories = $categoryController->get();
+}
+
+// search 
+if(isset($_GET['search'])) {
+    $categories = $categoryController->search($_GET['search']);
+}
 ?>
 
 
@@ -45,13 +55,14 @@ include './includes/topbar.php';
             </form>
          </div> -->
 
-         <form
+         <form method="GET"
     class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
     <div class="input-group">
-        <input type="text" class="form-control bg-light border-1 small" placeholder="Search for..."
-            aria-label="Search" aria-describedby="basic-addon2">
+        <input type="text" name="search" class="form-control bg-light border-1 small" 
+        placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"
+        value="<?php if(isset($_GET['search'])) {echo $_GET['search'];} ?>">
         <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
+            <button class="btn btn-primary" type="submit">
                 <i class="fas fa-search fa-sm"></i>
             </button>
         </div>
@@ -65,6 +76,7 @@ include './includes/topbar.php';
                     <tr>
                         <th width="80px">No</th>
                         <th>Category</th>
+                        <th width="240px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,10 +84,21 @@ include './includes/topbar.php';
 <?php
     foreach ($categories['data'] as $key => $category) {
         $no = $key + 1;
+        $id = $category['id'];
         $name = $category['name'];
         echo "<tr>
                 <td>$no</td>
                 <td>$name</td>
+                <td>
+                <div class='d-flex'>
+                    <a href='/admin/category_edit.php?id=$id&&name=$name' class='btn btn-sm btn-primary mr-2'>Edit</a>
+                    <form method='POST'>
+                        <input type='hidden' name='id' value='$no'>
+                        <input type='hidden' name='name' value='$name'>
+                        <button type='submit' name='delete' class='btn btn-sm btn-danger'>Delete</button>
+                    </form>
+                </div>
+                </td>
             </tr>";
     }
 
@@ -85,43 +108,11 @@ include './includes/topbar.php';
                 </tbody>
             </table>
 
-        <div class="row p-0 m-0">
-            <div class="col-sm-12 col-md-5">
-                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-                    Showing 1 to 10 of 57 entries
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-7">
-                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                    <ul class="pagination text-right">
-                        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                        </li>
-                        <li class="paginate_button page-item active">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a>
-                        </li>
-                        <li class="paginate_button page-item next" id="dataTable_next">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <?php 
+        if(isset($categories['link'])) {
+            echo $categories['link'];
+        }
+        ?>
 
         </div>
     </div>
@@ -129,17 +120,12 @@ include './includes/topbar.php';
 
 </div>
 <!-- /.container-fluid -->
-
 </div>
 <!-- End of Main Content -->
-
-
 </div>
 <!-- End of Content Wrapper -->
-
 </div>
 <!-- End of Page Wrapper -->
-
 </div>
 </div>
 </div>

@@ -11,8 +11,12 @@ session_start();
 $_SESSION['currentpage'] = "shop";
 
 $productController = new ProductController();
-$products = $productController->get();
 
+if (isset($_GET['page'])) {
+  $products = $productController->get($_GET['page']);
+} else {
+  $products = $productController->get();
+}
 ?>
 
 <div class="hero_area">
@@ -28,17 +32,10 @@ $products = $productController->get();
 
   <section class="shop_section layout_padding">
     <div class="container">
-      <!-- <div class="heading_container heading_center">
-        <h2>
-          Latest Products
-        </h2>
-      </div> -->
       <div class="row">
 
       <?php
-      // print_r($products['rows']);
 foreach ($products['data'] as $product) {
-  // print_r($product['name']);
       ?>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -70,11 +67,15 @@ foreach ($products['data'] as $product) {
         <?php } ?>
 
       </div>
-      <div class="btn-box">
+      <!-- <div class="btn-box">
         <a href="">
           View All Products
         </a>
-      </div>
+      </div> -->
+    </div>
+
+    <div class="container-fluid mt-3">
+    <?php echo $products['link'] ?>
     </div>
   </section>
 

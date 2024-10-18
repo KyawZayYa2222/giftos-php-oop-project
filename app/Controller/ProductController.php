@@ -41,7 +41,7 @@ class ProductController {
         //     'rows' => $result->fetch_all(MYSQLI_ASSOC)
         // ];
 
-        $limit = 8;
+        $limit = 2;
         $tableName = "products";
 
         try {

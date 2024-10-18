@@ -8,7 +8,7 @@ use Rakit\Validation\Validator;
 session_start();
 $_SESSION['admin_current_page'] = 'category_create';
 
-if (isset($_POST['category_create'])) {
+if (isset($_POST['category_edit'])) {
     $validator = new Validator();
 
     $validation = $validator->validate($_POST + $_FILES, [
@@ -19,7 +19,7 @@ if (isset($_POST['category_create'])) {
         $errors = $validation->errors();
     } else {
         $categoryController = new CategoryController();
-        $categoryController->store($_POST);
+        $categoryController->update($_POST);
     }
 
 }
@@ -50,19 +50,21 @@ include './includes/topbar.php';
 <!-- Page Heading -->
 <div class="d-flex mb-2 justify-content-between">
     <h1 class="h3 text-gray-800">Category</h1>
-    <!-- <button type="submit" name="category_create" class="btn btn-primary">Create</button> -->
+    <!-- <button type="submit" name="category_edit" class="btn btn-primary">Create</button> -->
 </div>
 
 <!-- DataTales Example -->
 <div class="container">
     <div class="card shadow mb-4">
         <div class="card-header">
-            Category Create Form
+            Category Edit Form
         </div>
         <div class="card-body">
                 <form action="" method="post">
+                <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>">
                 <input class="form-control mb-3 <?php if(isset($errors) && $nameErr = $errors->first('name')) {echo 'is-invalid';} ?>" 
-                name="name" type="text" placeholder="Category" aria-label="default input example">
+                name="name" type="text" placeholder="Category" aria-label="default input example"
+                value="<?php echo $_GET['name'] ?>">
                 
 <?php
 if(isset($errors) && $nameErr = $errors->first('name')) {
@@ -70,7 +72,7 @@ if(isset($errors) && $nameErr = $errors->first('name')) {
 }
 ?>
 
-                <button type="submit" name="category_create" class="btn btn-success float-right">Create</button>
+                <button type="submit" name="category_edit" class="btn btn-success float-right">Create</button>
                 </form>
         </div>
     </div>
