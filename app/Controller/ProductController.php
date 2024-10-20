@@ -16,40 +16,39 @@ class ProductController {
 
     // get paginate
     public function get(int $page = 1) {
-        // $limit = 8;
-        // $sql = "SELECT * FROM products";
-        // $totalRow = $this->GetQuery($sql)->num_rows;
-
-        // $totalPage = ceil($totalRow / $limit);
-
-        // $startRow = ($page - 1) * $limit;
-
-        // $sql = "SELECT * FROM products LIMIT $startRow, $limit";
-        // $result = $this->GetQuery($sql);
-
-        // $prevPage = $page - 1;
-        // $nextPage = $page + 1;
-
-        // return [
-        //     'current_page' => $page,
-        //     'prev_page' => $prevPage,
-        //     'next_page' => $nextPage,
-        //     'total' => $totalRow,
-        //     'total_page' => $totalPage,
-        //     'start_row' => $startRow,
-        //     'end_row' => $startRow + $limit,
-        //     'rows' => $result->fetch_all(MYSQLI_ASSOC)
-        // ];
-
-        $limit = 2;
-        $tableName = "products";
+        $limit = 8;
+        $sql = "SELECT products.*, categories.name AS category_name FROM products
+                LEFT JOIN categories ON products.category_id = categories.id";
 
         try {
-            $data = Paginator::paginate($this->connect, $tableName, $limit, $page);
+            $data = Paginator::paginate($this->connect, $sql, $limit, $page);
             return $data;
         } catch(Exception $err) {
             echo "<div class='err-exception-con'>$err</div>";
         }
+    }
+
+
+    // Store 
+    public function store($request, $file) {
+        echo 'success';
+        // $categoryId = $request['category_id'];
+        // $name = $request['name'];
+        // $price = $request['price'];
+        // $qty = $request['qty'];
+        
+
+
+        // $sql = "INSERT INTO products (name) VALUES ('$request['name']')";
+
+        // try {
+        //     $this->connect->query($sql);
+        //     header("Location: category.php");
+        //     // echo "<div class='success-alert'>Category created successful.</div>";
+        //     exit();
+        // } catch (Exception $err) {
+        //     echo "<div class='err-exception-con'>$err</div>";
+        // }
     }
 
     

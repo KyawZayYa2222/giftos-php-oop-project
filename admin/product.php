@@ -1,8 +1,28 @@
 <?php
 include './includes/header.php';
 
+use App\Controller\ProductController;
+
 session_start();
 $_SESSION['admin_current_page'] = 'product';
+
+$productController = new ProductController();   
+
+if (isset($_GET['page'])) {
+    $products = $productController->get($_GET['page']);
+} else {
+    $products = $productController->get();
+}
+
+// search 
+if(isset($_GET['search'])) {
+    $products = $productController->search($_GET['search']);
+}
+
+// delete 
+if(isset($_POST['delete'])) {
+    $productController->delete($_POST);
+}
 ?>
 
 
@@ -25,12 +45,27 @@ include './includes/topbar.php';
 <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Product</h1>
+<div class="d-flex mb-2 justify-content-between">
+    <h1 class="h3 text-gray-800">Product</h1>
+    <a href="/admin/product_create.php" class="btn btn-primary">Create</a>
+</div>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        <form method="GET"
+            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control bg-light border-1 small" 
+                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"
+                value="<?php if(isset($_GET['search'])) {echo $_GET['search'];} ?>">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -39,101 +74,56 @@ include './includes/topbar.php';
                     <tr>
                         <th width="80px">No</th>
                         <th>Product</th>
+                        <th>Category</th>
                         <th>Price</th>
                         <th>Qty</th>
-                        <!-- <th>Start date</th>
+                        <th>Actions</th>
+                        <!-- <th>Start d/ate</th>
                         <th>Salary</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <span class="table-icon-img mr-2">
-                                <img src="../assets/images/gifts.png" alt="image">
-                            </span>
-                            Jonas Alexander</td>
-                        <td>$220</td>
-                        <td>30</td>
-                        <!-- <td>2010/07/14</td>
-                        <td>$86,500</td> -->
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <span class="table-icon-img mr-2">
-                                <img src="../assets/images/gifts.png" alt="image">
-                            </span>    
-                        Shad Decker</td>
-                        <td>$50</td>
-                        <td>51</td>
-                        <!-- <td>2008/11/13</td>
-                        <td>$183,000</td> -->
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                        <span class="table-icon-img mr-2">
-                                <img src="../assets/images/gifts.png" alt="image">
-                            </span>    
-                        Michael Bruce</td>
-                        <td>$120</td>
-                        <td>29</td>
-                        <!-- <td>2011/06/27</td>
-                        <td>$183,000</td> -->
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>
-                        <span class="table-icon-img mr-2">
-                                <img src="../assets/images/gifts.png" alt="image">
-                            </span>    
-                        Donna Snider</td>
-                        <td>$420</td>
-                        <td>27</td>
-                        <!-- <td>2011/01/25</td>
-                        <td>$112,000</td> -->
-                    </tr>
+<?php
+    foreach ($products['data'] as $key => $product) {
+        $no = $key + 1;
+        $id = $product['id'];
+        $name = $product['name'];
+        $category = $product['category_name'];
+        $price = $product['price'];
+        $qty = $product['qty'];
+        echo "<tr>
+                <td>$no</td>
+                <td>
+                <span class='table-icon-img mr-2'>
+                    <img src='../assets/images/gifts.png' alt='image'>
+                </span>
+                $name
+                </td>
+                <td>$category</td>
+                <td>$price</td>
+                <td>$qty</td>
+                <td>
+                <div class='d-flex'>
+                    <a href='/admin/product_edit.php?id=$id&&name=$name' class='btn btn-sm btn-primary mr-2'>Edit</a>
+                    <form method='POST'>
+                        <input type='hidden' name='id' value='$id'>
+                        <button type='submit' name='delete' class='btn btn-sm btn-danger'>Delete</button>
+                    </form>
+                </div>
+                </td>
+            </tr>";
+    }
+
+?>
+                    
                 </tbody>
             </table>
 
-        <div class="row p-0 m-0">
-            <div class="col-sm-12 col-md-5">
-                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-                    Showing 1 to 10 of 57 entries
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-7">
-                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                    <ul class="pagination text-right">
-                        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                        </li>
-                        <li class="paginate_button page-item active">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a>
-                        </li>
-                        <li class="paginate_button page-item next" id="dataTable_next">
-                            <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+            <?php 
+        if(isset($products['link'])) {
+            echo $products['link'];
+        }
+        ?>
 
         </div>
     </div>

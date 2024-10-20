@@ -18,6 +18,11 @@ if (isset($_GET['page'])) {
 if(isset($_GET['search'])) {
     $categories = $categoryController->search($_GET['search']);
 }
+
+// delete 
+if(isset($_POST['delete'])) {
+    $categoryController->delete($_POST);
+}
 ?>
 
 
@@ -48,26 +53,19 @@ include './includes/topbar.php';
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-         <!-- <div class="col col-md-4">
-            <form action="">
-                <input class="form-control" type="text" placeholder="Search">
-            </form>
-         </div> -->
-
          <form method="GET"
-    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-    <div class="input-group">
-        <input type="text" name="search" class="form-control bg-light border-1 small" 
-        placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"
-        value="<?php if(isset($_GET['search'])) {echo $_GET['search'];} ?>">
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm"></i>
-            </button>
-        </div>
-    </div>
-</form>
+            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control bg-light border-1 small" 
+                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"
+                value="<?php if(isset($_GET['search'])) {echo $_GET['search'];} ?>">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -93,8 +91,7 @@ include './includes/topbar.php';
                 <div class='d-flex'>
                     <a href='/admin/category_edit.php?id=$id&&name=$name' class='btn btn-sm btn-primary mr-2'>Edit</a>
                     <form method='POST'>
-                        <input type='hidden' name='id' value='$no'>
-                        <input type='hidden' name='name' value='$name'>
+                        <input type='hidden' name='id' value='$id'>
                         <button type='submit' name='delete' class='btn btn-sm btn-danger'>Delete</button>
                     </form>
                 </div>

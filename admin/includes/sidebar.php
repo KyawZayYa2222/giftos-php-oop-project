@@ -65,7 +65,7 @@ $dotenv->load();
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item <?php if($currentPage === 'product') echo 'active'; ?>" href="/admin/product.php">List</a>
-            <a class="collapse-item <?php if($currentPage === 'product_create') echo 'active'; ?>" href="/admin/product.php">Create</a>
+            <a class="collapse-item <?php if($currentPage === 'product_create') echo 'active'; ?>" href="/admin/product_create.php">Create</a>
         </div>
     </div>
 </li>

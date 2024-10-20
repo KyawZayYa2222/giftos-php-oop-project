@@ -8,34 +8,32 @@ use App\Database\Connection;
 class Paginator {
     public static $currentPage, $prevPage, $nextPage, $totalPage, $totalRow, $startRow, $endRow, $total;
 
-    public static function paginate($connect, $table_name, int $limit, int $page = 1) {
-        $sql = "SELECT * FROM $table_name";
-        $totalRow = $connect->query($sql)->num_rows;
+    public static function paginate($connect, $sql, int $limit, int $page = 1) {
+        self::$totalRow = $connect->query($sql)->num_rows;
 
-        $totalPage = ceil($totalRow / $limit);
+        self::$totalPage = ceil(self::$totalRow / $limit);
+
+        // Handle invalid page 
+        $page = $page > self::$totalPage ? self::$totalPage : $page;
+        $page = $page < 1 ? 1 : $page;
 
         $startRow = ($page - 1) * $limit;
 
-        $sql = "SELECT * FROM $table_name LIMIT $startRow, $limit";
+        $sql .= " LIMIT $startRow, $limit";
         $result = $connect->query($sql);
 
-        $prevPage = $page - 1;
-        $nextPage = $page + 1;
-
-        self::$totalPage = $totalPage;
+        self::$prevPage = $page - 1;
+        self::$nextPage = $page + 1;
         self::$currentPage = $page;
         self::$startRow = $startRow + 1;
-        self::$endRow = $startRow + $limit;
-        self::$total = $total;
-        self::$prevPage = $prevPage;
-        self::$nextPage = $nextPage;
+        self::$endRow = ($page * $limit) <= self::$totalRow ? ($page * $limit) : self::$totalRow;
 
         return [
-            'current_page' => $page,
-            'prev_page' => $prevPage,
-            'next_page' => $nextPage,
-            'total' => $totalRow,
-            'total_page' => $totalPage,
+            'current_page' => self::$currentPage,
+            'prev_page' => self::$prevPage,
+            'next_page' => self::$nextPage,
+            'total' => self::$totalRow,
+            'total_page' => self::$totalPage,
             'start_row' => self::$startRow,
             'end_row' => self::$endRow,
             'data' => $result->fetch_all(MYSQLI_ASSOC),
@@ -43,14 +41,15 @@ class Paginator {
         ];
     }
 
-    public static function link() {
+
+    private static function link() {
         $baseUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         $pagination = '';
         $pagination .= "<div class='row p-0 m-0'>
                 <div class='col-sm-12 col-md-5'>
                     <div class='dataTables_info' id='dataTable_info' role='status' aria-live='polite'>
-                        Showing ".self::$startRow." to ".self::$endRow." of ".self::$total." entries
+                        Showing ".self::$startRow." to ".self::$endRow." of ".self::$totalRow." entries
                     </div>
                 </div>
                 <div class='col-sm-12 col-md-7'>

@@ -14,13 +14,25 @@ class CategoryController {
         $this->connect = $connection->connect();
     }
 
+
+    public function all() {
+        $sql = "SELECT * FROM categories";
+        
+        try {
+            $data = $this->connect->query($sql)->fetch_all(MYSQLI_ASSOC);
+            return $data;
+        } catch(Exception $err) {
+            echo "<div class='err-exception-con'>$err</div>";
+        }
+    }
     
     // Get 
     public function get(int $page=1) {
-        $tableName = "categories";
+        // $tableName = "categories";
+        $sql = "SELECT * FROM categories";
         $limit = 15;
 
-        $data = Paginator::paginate($this->connect, $tableName, $limit, $page);
+        $data = Paginator::paginate($this->connect, $sql, $limit, $page);
         return $data;
     }
 
@@ -56,7 +68,16 @@ class CategoryController {
     }
 
 
-    // Store 
+    // find 
+    public function find($id) {
+        $sql = "SELECT * FROM categories WHERE id='$id'";
+        $data = $this->connect->query($sql);
+
+        return $data;
+    }
+
+
+    // Update 
     public function update($request) {
         $id = $request['id'];
         $name = $request['name'];
@@ -67,6 +88,22 @@ class CategoryController {
             $this->connect->query($sql);
             header("Location: category.php");
             // echo "<div class='success-alert'>Category created successful.</div>";
+            exit();
+        } catch (Exception $err) {
+            echo "<div class='err-exception-con'>$err</div>";
+        }
+    }
+
+
+    // Delete 
+    public function delete($request) {
+        $id = $request['id'];
+
+        $sql = "DELETE FROM categories WHERE id='$id'";
+        
+        try {
+            $this->connect->query($sql);
+            header("Location: " . $_SERVER['HTTP_REFERER']);
             exit();
         } catch (Exception $err) {
             echo "<div class='err-exception-con'>$err</div>";
