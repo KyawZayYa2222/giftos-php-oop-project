@@ -83,13 +83,16 @@ include './includes/topbar.php';
     foreach ($categories['data'] as $key => $category) {
         $no = $key + 1;
         $id = $category['id'];
-        $name = $category['name'];
+        $name = htmlspecialchars($category['name'] ?? '');
         echo "<tr>
                 <td>$no</td>
                 <td>$name</td>
                 <td>
                 <div class='d-flex'>
+                    <!-- edit btn -->
                     <a href='/admin/category_edit.php?id=$id&&name=$name' class='btn btn-sm btn-primary mr-2'>Edit</a>
+
+                    <!-- delete btn -->
                     <form method='POST'>
                         <input type='hidden' name='id' value='$id'>
                         <button type='submit' name='delete' class='btn btn-sm btn-danger'>Delete</button>

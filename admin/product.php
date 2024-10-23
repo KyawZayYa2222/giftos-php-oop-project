@@ -1,7 +1,12 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include './includes/header.php';
 
 use App\Controller\ProductController;
+use App\Helper\MediaAsset;
 
 session_start();
 $_SESSION['admin_current_page'] = 'product';
@@ -77,7 +82,7 @@ include './includes/topbar.php';
                         <th>Category</th>
                         <th>Price</th>
                         <th>Qty</th>
-                        <th>Actions</th>
+                        <th width="240px">Actions</th>
                         <!-- <th>Start d/ate</th>
                         <th>Salary</th> -->
                     </tr>
@@ -87,15 +92,17 @@ include './includes/topbar.php';
     foreach ($products['data'] as $key => $product) {
         $no = $key + 1;
         $id = $product['id'];
-        $name = $product['name'];
-        $category = $product['category_name'];
-        $price = $product['price'];
-        $qty = $product['qty'];
+        $name = htmlspecialchars($product['name'] ?? '');
+        $category = htmlspecialchars($product['category_name'] ?? '');
+        $price = htmlspecialchars($product['price'] ?? '');
+        $qty = htmlspecialchars($product['qty'] ?? '');
+        $image = $product['image'] != null ? MediaAsset::assets($product['image']) : MediaAsset::assets('images/gifts.png');
+
         echo "<tr>
                 <td>$no</td>
                 <td>
                 <span class='table-icon-img mr-2'>
-                    <img src='../assets/images/gifts.png' alt='image'>
+                    <img src='$image' alt='image'>
                 </span>
                 $name
                 </td>
@@ -104,7 +111,7 @@ include './includes/topbar.php';
                 <td>$qty</td>
                 <td>
                 <div class='d-flex'>
-                    <a href='/admin/product_edit.php?id=$id&&name=$name' class='btn btn-sm btn-primary mr-2'>Edit</a>
+                    <a href='/admin/product_edit.php?id=$id' class='btn btn-sm btn-primary mr-2'>Edit</a>
                     <form method='POST'>
                         <input type='hidden' name='id' value='$id'>
                         <button type='submit' name='delete' class='btn btn-sm btn-danger'>Delete</button>
@@ -129,19 +136,15 @@ include './includes/topbar.php';
     </div>
 </div>
 
+
 </div>
 <!-- /.container-fluid -->
-
 </div>
 <!-- End of Main Content -->
-
-
 </div>
 <!-- End of Content Wrapper -->
-
 </div>
 <!-- End of Page Wrapper -->
-
 </div>
 </div>
 </div>

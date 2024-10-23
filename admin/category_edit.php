@@ -6,7 +6,7 @@ use App\Controller\CategoryController;
 use Rakit\Validation\Validator;
 
 session_start();
-$_SESSION['admin_current_page'] = 'category_create';
+$_SESSION['admin_current_page'] = 'category_edit';
 
 if (isset($_POST['category_edit'])) {
     $validator = new Validator();
@@ -72,7 +72,7 @@ if(isset($errors) && $nameErr = $errors->first('name')) {
 }
 ?>
 
-                <button type="submit" name="category_edit" class="btn btn-success float-right">Create</button>
+                <button type="submit" name="category_edit" class="btn btn-success float-right">Update</button>
                 </form>
         </div>
     </div>

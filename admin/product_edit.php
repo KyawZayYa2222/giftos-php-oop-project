@@ -2,20 +2,32 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-// include_once './vendor/autoload.php';
+
 include './includes/header.php';
+
 
 use App\Controller\CategoryController;
 use App\Controller\ProductController;
 use Rakit\Validation\Validator;
 
+
 session_start();
 $_SESSION['admin_current_page'] = 'product_create';
+
+$productController = new ProductController();
+
+// prevent invalid product 
+$productQuery = $productController->find($_GET['id']);
+if($productQuery->num_rows === 0) {
+    header("Location: product.php");
+} else {
+    $product = $productQuery->fetch_assoc();
+}
 
 $categoryController = new CategoryController();
 $categories = $categoryController->all();
 
-if (isset($_POST['product_create'])) {
+if (isset($_POST['product_edit'])) {
     $validator = new Validator();
 
     $validation = $validator->validate($_POST + $_FILES, [
@@ -32,8 +44,7 @@ if (isset($_POST['product_create'])) {
         // check category exist 
         $category = $categoryController->find($_POST['category_id']);
         if($category->num_rows > 0) {
-            $productController = new ProductController();
-            $productController->store($_POST, $_FILES);
+            $productController->update($_POST, $_FILES);
         } else {
             $validation->errors()->add('category_id', 'category_exist', 'Category does not exist');
             $errors = $validation->errors();
@@ -74,7 +85,7 @@ include './includes/topbar.php';
 <div class="container">
     <div class="card shadow mb-4">
         <div class="card-header">
-            Product Create Form
+            Product Edit Form
         </div>
         <div class="card-body">
                 <form action="" method="post" enctype="multipart/form-data">
@@ -85,7 +96,8 @@ include './includes/topbar.php';
                         <option value="">Choose category</option>
                         <?php
                         foreach ($categories as $key => $category) {
-                            echo "<option value='{$category['id']}'>{$category['name']}</option>";
+                            $select = $category['id'] == $product['category_id'] ? 'selected' : '';
+                            echo "<option value='{$category['id']}' $select >{$category['name']}</option>";
                         }
                         ?>
                         </select>
@@ -99,7 +111,8 @@ include './includes/topbar.php';
                     <div class="form-group col col-md-6">
                         <label for="name">Product Name</label>
                         <input class="form-control <?php if(isset($errors) && $nameErr = $errors->first('name')) {echo 'is-invalid';} ?>" 
-                            name="name" id="name" type="text" placeholder="Product Name" aria-label="default input example">
+                            name="name" id="name" type="text" placeholder="Product Name"
+                            value="<?php echo $product['name'] ?>" aria-label="default input example">
                         <?php
                         if(isset($errors) && $nameErr = $errors->first('name')) {
                             echo "<div class='invalid-feedback'> $nameErr </div>";
@@ -110,7 +123,8 @@ include './includes/topbar.php';
                     <div class="form-group col col-md-6">
                         <label for="price">Price</label>
                         <input class="form-control <?php if(isset($errors) && $nameErr = $errors->first('price')) {echo 'is-invalid';} ?>" 
-                            name="price" id="price" type="number" placeholder="Price" aria-label="default input example">
+                            name="price" id="price" type="number" placeholder="Price" 
+                            value="<?php echo $product['price'] ?>" aria-label="default input example">
                         <?php
                         if(isset($errors) && $nameErr = $errors->first('price')) {
                             echo "<div class='invalid-feedback'> $nameErr </div>";
@@ -121,7 +135,8 @@ include './includes/topbar.php';
                     <div class="form-group col col-md-6">
                         <label for="qty">Quantity</label>
                         <input class="form-control <?php if(isset($errors) && $nameErr = $errors->first('qty')) {echo 'is-invalid';} ?>" 
-                            name="qty" id="qty" type="number" placeholder="Quantity" aria-label="default input example">
+                            name="qty" id="qty" type="number" placeholder="Quantity" 
+                            value="<?php echo $product['qty'] ?>" aria-label="default input example">
                         <?php
                         if(isset($errors) && $nameErr = $errors->first('qty')) {
                             echo "<div class='invalid-feedback'> $nameErr </div>";
@@ -132,6 +147,11 @@ include './includes/topbar.php';
                     <div class="col px-2">
                     <label for="haha">Product Image</label>
                     <div class="custom-file mb-3">
+                        <!-- old image  -->
+                        <input type="hidden" name="old_image" value="<?php echo $product['image'] ?>">
+                        <!-- product id  -->
+                        <input type="hidden" name="id" value="<?php echo $product['id'] ?>">
+                        <!-- new image file  -->
                         <input type="file" name="image"
                         class="custom-file-input <?php if(isset($errors) && $nameErr = $errors->first('image')) {echo 'is-invalid';} ?>" 
                         id="validatedCustomFile">
@@ -146,7 +166,7 @@ include './includes/topbar.php';
                     
                 </div>
 
-                <button type="submit" name="product_create" class="btn btn-success float-right">Create</button>
+                <button type="submit" name="product_edit" class="btn btn-success float-right">Update</button>
                 </form>
         </div>
     </div>
