@@ -81,7 +81,7 @@ include './includes/topbar.php';
                 <div class="row">
                     <div class="form-group col col-12 col-md-6">
                         <label for="category_id">Category</label>
-                        <select class="select-2 form-control <?php if(isset($errors) && $nameErr = $errors->first('category_id')) {echo 'is-invalid';} ?>" id="category_id" name="category_id">
+                        <select class="select-2 form-control <?php if(isset($errors) && $categoryErr = $errors->first('category_id')) {echo 'is-invalid';} ?>" id="category_id" name="category_id">
                         <option value="">Choose category</option>
                         <?php
                         foreach ($categories as $key => $category) {
@@ -90,8 +90,8 @@ include './includes/topbar.php';
                         ?>
                         </select>
                         <?php
-                        if(isset($errors) && $nameErr = $errors->first('category_id')) {
-                            echo "<div class='invalid-feedback'> $nameErr </div>";
+                        if(isset($errors) && $categoryErr = $errors->first('category_id')) {
+                            echo "<div class='invalid-feedback'> $categoryErr </div>";
                         }
                         ?>
                     </div>
@@ -109,22 +109,22 @@ include './includes/topbar.php';
 
                     <div class="form-group col col-md-6">
                         <label for="price">Price</label>
-                        <input class="form-control <?php if(isset($errors) && $nameErr = $errors->first('price')) {echo 'is-invalid';} ?>" 
+                        <input class="form-control <?php if(isset($errors) && $priceErr = $errors->first('price')) {echo 'is-invalid';} ?>" 
                             name="price" id="price" type="number" placeholder="Price" aria-label="default input example">
                         <?php
-                        if(isset($errors) && $nameErr = $errors->first('price')) {
-                            echo "<div class='invalid-feedback'> $nameErr </div>";
+                        if(isset($errors) && $priceErr = $errors->first('price')) {
+                            echo "<div class='invalid-feedback'> $priceErr </div>";
                         }
                         ?>
                     </div>
 
                     <div class="form-group col col-md-6">
                         <label for="qty">Quantity</label>
-                        <input class="form-control <?php if(isset($errors) && $nameErr = $errors->first('qty')) {echo 'is-invalid';} ?>" 
+                        <input class="form-control <?php if(isset($errors) && $qtyErr = $errors->first('qty')) {echo 'is-invalid';} ?>" 
                             name="qty" id="qty" type="number" placeholder="Quantity" aria-label="default input example">
                         <?php
-                        if(isset($errors) && $nameErr = $errors->first('qty')) {
-                            echo "<div class='invalid-feedback'> $nameErr </div>";
+                        if(isset($errors) && $qtyErr = $errors->first('qty')) {
+                            echo "<div class='invalid-feedback'> $qtyErr </div>";
                         }
                         ?>
                     </div>
@@ -133,12 +133,12 @@ include './includes/topbar.php';
                     <label for="haha">Product Image</label>
                     <div class="custom-file mb-3">
                         <input type="file" name="image"
-                        class="custom-file-input <?php if(isset($errors) && $nameErr = $errors->first('image')) {echo 'is-invalid';} ?>" 
+                        class="custom-file-input <?php if(isset($errors) && $imgErr = $errors->first('image')) {echo 'is-invalid';} ?>" 
                         id="validatedCustomFile">
                         <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
                         <?php
-                        if(isset($errors) && $nameErr = $errors->first('image')) {
-                            echo "<div class='invalid-feedback'> $nameErr </div>";
+                        if(isset($errors) && $imgErr = $errors->first('image')) {
+                            echo "<div class='invalid-feedback'> $imgErr </div>";
                         }
                         ?>
                     </div>

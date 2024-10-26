@@ -620,7 +620,7 @@ a:focus {
   padding: 45px 20px;
 }
 
-.contact_section input {
+.contact_section input, .login_section input {
   width: 100%;
   border: 1px solid #919191;
   height: 50px;
@@ -631,27 +631,27 @@ a:focus {
   color: #101010;
 }
 
-.contact_section input::-webkit-input-placeholder {
+.contact_section input::-webkit-input-placeholder, .login_section input::-webkit-input-placeholder {
   color: #131313;
 }
 
-.contact_section input:-ms-input-placeholder {
+.contact_section input:-ms-input-placeholder, .login_section input:-ms-input-placeholder {
   color: #131313;
 }
 
-.contact_section input::-ms-input-placeholder {
+.contact_section input::-ms-input-placeholder, .login_section input::-ms-input-placeholder {
   color: #131313;
 }
 
-.contact_section input::placeholder {
+.contact_section input::placeholder, .login_section input::placeholder {
   color: #131313;
 }
 
-.contact_section input.message-box {
+.contact_section input.message-box,  .login_section input.message-box {
   height: 120px;
 }
 
-.contact_section button {
+.contact_section button, .login_section button {
   display: inline-block;
   padding: 12px 45px;
   background-color: #db4f66;
@@ -665,7 +665,7 @@ a:focus {
   margin: 35px auto 0 auto;
 }
 
-.contact_section button:hover {
+.contact_section button:hover, .login_section button:hover {
   background-color: transparent;
   color: #db4f66;
 }
@@ -883,6 +883,40 @@ a:focus {
   background-color: #db4566;
 }
 
+.search-input {
+  width: 50vw;
+  padding: .5em;
+  border: #c0b0b3 2px solid;
+  border-right: 0px;
+  /* border-radius: .6em; */
+  border-top-left-radius: .6em;
+  border-bottom-left-radius: .6em;
+  outline: none;
+  transition: all .2s ease-in-out;
+}
+
+.search-input:focus {
+  border: #a7999b 2px solid;
+  box-shadow: rgb(202, 201, 201) 1px 1px 6px;
+}
+
+.search-btn {
+  background: #e74d6e;
+  border: none;
+  border-top-right-radius: .6em;
+  border-bottom-right-radius: .6em;
+  color: rgb(241, 221, 221);
+  padding: .5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  /* border-radius: .6em; */
+  transition: all .2s ease-in;
+}
+
+.search-btn:hover {
+  background: #a0324a;
+}
+
 .table-icon-img, .table-icon-img img {
   width: 40px;
   height: 40px;
@@ -929,23 +963,3 @@ a:focus {
   transform: translateY(2em), translateX(-10em);
   transition-duration: 4s;
 }
-
-/* @keyframes alert {
-  0% {
-    opacity: 0;
-  }
-  15% {
-    opacity: 100;
-    transform: translateY(2em);
-  }
-  50% {
-    
-  }
-  99% {
-    opacity: 0;
-    transform: translateX(-100px);
-  }
-  100% {
-    display: none;
-  }
-} */

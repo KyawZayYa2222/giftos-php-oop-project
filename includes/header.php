@@ -7,6 +7,8 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
 $dotenv->load();
 
+session_start();
+
 ?>
 
 <!DOCTYPE html>

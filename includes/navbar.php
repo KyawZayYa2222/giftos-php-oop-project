@@ -1,12 +1,12 @@
 <?php
 error_reporting(1);
 
-session_start();
+// session_start();
 
 $currentPage = $_SESSION['currentpage'];
 
 // echo $currentPage;
-$menuPages = ['index' => 'Home', 'shop' => 'Shop', 'why' => 'Why', 'contact' => 'Contact'];
+$menuPages = ['index' => 'Home', 'shop' => 'Shop', 'why' => 'Why Us', 'contact' => 'Contact Us'];
 
 ?>
 
@@ -15,7 +15,7 @@ $menuPages = ['index' => 'Home', 'shop' => 'Shop', 'why' => 'Why', 'contact' => 
       <nav class="navbar navbar-expand-lg custom_nav-container ">
         <a class="navbar-brand" href="index.php">
           <span>
-            Giftos
+          <?php echo $_ENV['APP_NAME'] ?>
           </span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

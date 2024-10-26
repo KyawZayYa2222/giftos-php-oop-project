@@ -8,6 +8,8 @@ use App\Helper\FileUpload;
 
 class ProductController {
     private $connect;
+    private $baseSql = "SELECT products.*, categories.name AS category_name FROM products
+                        LEFT JOIN categories ON products.category_id = categories.id ";
 
     function __construct() {
         $connection = new Connection();
@@ -16,10 +18,9 @@ class ProductController {
 
 
     // get paginate
-    public function get(int $page = 1) {
+    public function get(int $page = 1, $order = 'ASC') {
         $limit = 15;
-        $sql = "SELECT products.*, categories.name AS category_name FROM products
-                LEFT JOIN categories ON products.category_id = categories.id";
+        $sql = $this->baseSql . "ORDER BY products.id $order";
 
         try {
             $data = Paginator::paginate($this->connect, $sql, $limit, $page);
@@ -32,11 +33,22 @@ class ProductController {
 
     // search 
     public function search($search='') {
-        $sql = "SELECT products.*, categories.name AS category_name FROM products
-                LEFT JOIN categories ON products.category_id = categories.id
-                WHERE products.name LIKE '%$search%'
-                OR products.price LIKE '%$search%'
-                OR categories.name LIKE '%$search%'";
+        $sql = $this->baseSql . "WHERE products.name LIKE '%$search%'
+                OR products.price LIKE '%$search%' OR categories.name LIKE '%$search%'";
+
+        try {
+            $data = $this->connect->query($sql);
+            return [
+                'data' => $data
+            ];
+        } catch (Exception $err) {
+            echo "<div class='err-exception-con'>$err</div>";
+        }
+    }
+
+
+    public function latest() {
+        $sql = $this->baseSql . "ORDER BY products.id DESC LIMIT 8";
 
         try {
             $data = $this->connect->query($sql);
@@ -51,9 +63,7 @@ class ProductController {
 
     // Find 
     public function find($id) {
-        $sql = "SELECT products.*, categories.id AS category_id, categories.name AS category_name FROM products
-                LEFT JOIN categories ON products.category_id = categories.id
-                WHERE products.id = '$id'";
+        $sql = $this->baseSql . "WHERE products.id = '$id'";
 
         $data = $this->connect->query($sql);
 
@@ -126,11 +136,11 @@ class ProductController {
     }
 
     
-    private function GetQuery($sql) {
-        $result = $this->connect->query($sql);
+    // private function GetQuery($sql) {
+    //     $result = $this->connect->query($sql);
 
-        return $result;
-    }
+    //     return $result;
+    // }
 
     
     private function UploadImage($files, $oldFile = null) {

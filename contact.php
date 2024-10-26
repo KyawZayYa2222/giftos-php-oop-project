@@ -3,7 +3,7 @@ error_reporting(1);
 
 include 'includes/header.php';
 
-session_start();
+// session_start();
 
 $_SESSION['currentpage'] = "contact";
 ?>
