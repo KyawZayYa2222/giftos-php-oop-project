@@ -10,15 +10,28 @@ class Auth {
         session_start();
     }
 
-    // public function user() {
-        
-    // }
 
-    // public function check() {
-    //     if(isset(session))
-    // }
+    // get authenicated user data 
+    public static function user() {
+        if(!isset($userInstance)) {
+            self::$userInstance = unserialize($_SESSION['user']);
+        }
+
+        return self::$userInstance;
+    }
 
 
+    // Auth check 
+    public static function check() {
+        if(isset(self::$userInstance) || isset($_SESSION['user'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    // Auth make 
     public static function make(array $userData) {
         // create user object 
         $user = new User($userData);
@@ -27,7 +40,6 @@ class Auth {
 
         // store in session 
         $_SESSION['user'] = serialize($user);
-        echo $user->name;
 
         return $user;
     }   

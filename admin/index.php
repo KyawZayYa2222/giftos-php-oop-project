@@ -1,7 +1,17 @@
 <?php
 include './includes/header.php';
 
-session_start();
+use App\Helper\Auth;
+
+// Auth check 
+if(!Auth::check()) {
+    header("Location: login.php");
+    exit();
+}
+if(Auth::user()->user_type !== 'admin') {
+    header("Location: index.php");
+}
+
 $_SESSION['admin_current_page'] = 'index';
 ?>
 

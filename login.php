@@ -6,6 +6,33 @@ error_reporting(E_ALL);
 include './includes/header.php';
 
 use App\Helper\MediaAsset;
+use Rakit\Validation\Validator;
+use App\Controller\UserController;
+use App\Helper\Auth;
+
+// auth check 
+if(Auth::check()) {
+    header("Location: index.php");
+    exit();
+}
+
+
+if (isset($_POST['login'])) {
+    $validator = new Validator();
+
+    $validation = $validator->validate($_POST, [
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    if($validation->fails())  {
+        $errors = $validation->errors();
+    } else {
+        $userController = new UserController();
+        $result = $userController->login($_POST);
+    }
+
+}
 
 ?>
 
@@ -27,17 +54,41 @@ use App\Helper\MediaAsset;
                     </h2>
 
                     <p>Login to your account.</p>
-                    
-                    <!-- <div class="login_section"> -->
-                    <form action="" class="">
-                        <input type="text" name="name" placeholder="Username">
 
-                        <input type="email" name="email" placeholder="Email">
+                    <!-- message  -->
+                    <?php
+                    if(isset($result) && $result['success'] === false) {
+                        echo "<p class='text-danger mb-2'>". $result['message'] ."</p>";
+                    }
+                    ?>
 
-                        <input type="password" name="password" placeholder="Password">
+
+                    <form action="" method="POST">
+                        <!-- email  -->
+                        <div class="">
+                        <?php
+                        if(isset($errors) && $emailErr = $errors->first('email')) {
+                            echo "<small class='text-danger'>$emailErr</small>";
+                        }
+                        ?>
+                            <input type="email" name="email" 
+                            class="<?php if(isset($errors) && $emailErr = $errors->first('email')) {echo 'border-danger';} ?>" 
+                            placeholder="Email">
+                        </div>
+
+                        <div class="">
+                        <?php
+                        if(isset($errors) && $passErr = $errors->first('password')) {
+                            echo "<small class='text-danger'>$passErr</small>";
+                        }
+                        ?>
+                            <input type="password" name="password" 
+                            class="<?php if(isset($errors) && $passErr = $errors->first('password')) {echo 'border-danger';} ?>" 
+                            placeholder="Password">
+                        </div>
 
                         <div class="d-flex">
-                        <button>Login</button>
+                            <button type="submit" name="login">Login</button>
                         </div>
                     </form>
                     <!-- </div> -->

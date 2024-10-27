@@ -1,7 +1,7 @@
 <?php
 error_reporting(1);
 
-// session_start();
+use App\Helper\Auth;
 
 $currentPage = $_SESSION['currentpage'];
 
@@ -37,20 +37,29 @@ $menuPages = ['index' => 'Home', 'shop' => 'Shop', 'why' => 'Why Us', 'contact' 
 
           </ul>
           <div class="user_option">
-            <a href="">
+
+          <?php if(Auth::check()) {?>
+            <a href="profile.php">
               <i class="fa fa-user" aria-hidden="true"></i>
               <span>
-                Login
+                Profile
               </span>
             </a>
-            <a href="">
+            <a href="cart.php">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             </a>
-            <form class="form-inline ">
-              <button class="btn nav_search-btn" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
+            <?php } else { ?>
+              <a href="login.php">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span>
+                  Login
+                </span>
+              </a>
+              <a href="cart.php">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              </a>
+            <?php } ?>
+
           </div>
         </div>
       </nav>

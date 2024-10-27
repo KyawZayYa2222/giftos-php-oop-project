@@ -7,9 +7,9 @@ include 'includes/header.php';
 use App\Controller\Product;
 use App\Controller\ProductController;
 use App\Helper\MediaAsset;
+use App\Helper\Auth;
 
 // store current page session 
-// session_start();
 $_SESSION['currentpage'] = "index";
 
 $productController = new ProductController();
@@ -57,20 +57,29 @@ $products = $productController->latest();
             </li>
           </ul>
           <div class="user_option">
-            <a href="">
+
+          <?php if(Auth::check()) {?>
+            <a href="profile.php">
               <i class="fa fa-user" aria-hidden="true"></i>
               <span>
-                Login
+                Profile
               </span>
             </a>
-            <a href="">
+            <a href="cart.php">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             </a>
-            <form class="form-inline ">
-              <button class="btn nav_search-btn" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
+            <?php } else { ?>
+              <a href="login.php">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span>
+                  Login
+                </span>
+              </a>
+              <a href="cart.php">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              </a>
+            <?php } ?>
+
           </div>
         </div>
       </nav>

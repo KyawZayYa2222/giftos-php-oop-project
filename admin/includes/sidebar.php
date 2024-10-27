@@ -4,7 +4,6 @@ include_once '../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 
-// session_start();
 $currentPage = $_SESSION['admin_current_page'];
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
@@ -36,7 +35,7 @@ $dotenv->load();
 
 <hr class="sidebar-divider mb-1">
 
-<li class="nav-item <?php if($currentPage === 'category' || $currentPage === 'category_create') echo 'active'; ?>">
+<li class="nav-item <?php if($currentPage === 'category' || $currentPage === 'category_create' || $currentPage === 'category_edit') echo 'active'; ?>">
     <a class="nav-link custom-nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategory"
         aria-expanded="true" aria-controls="collapseCategory">
         <i class="fa fa-th-large"></i>
@@ -54,7 +53,7 @@ $dotenv->load();
 
 <hr class="sidebar-divider mb-1">
 
-<li class="nav-item <?php if($currentPage === 'product' || $currentPage === 'product_create') echo 'active'; ?>">
+<li class="nav-item <?php if($currentPage === 'product' || $currentPage === 'product_create' || $currentPage === 'product_edit') echo 'active'; ?>">
     <a class="nav-link custom-nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
         aria-expanded="true" aria-controls="collapseProduct">
         <i class="fa fa-cubes"></i>

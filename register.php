@@ -8,6 +8,13 @@ include './includes/header.php';
 use App\Helper\MediaAsset;
 use Rakit\Validation\Validator;
 use App\Controller\UserController;
+use App\Helper\Auth;
+
+// auth check 
+if(Auth::check()) {
+    header("Location: index.php");
+    exit();
+}
 
 
 if (isset($_POST['register'])) {
