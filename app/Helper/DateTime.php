@@ -12,18 +12,18 @@ class DateTime {
         $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
         $dotenv->load();
 
-        $this->setTimeZone();
+        self::$setTimeZone();
     }
 
 
     // set time zone 
-    private function setTimeZone() {
+    private static function setTimeZone() {
         date_default_timezone_set($_ENV['TIME_ZONE']);
     }
     
 
     // $format (string) 
-    public function getDate($format) {
+    public static function getDate($format) {
         return date($format);
     }
 }

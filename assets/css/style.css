@@ -963,3 +963,46 @@ a:focus {
   transform: translateY(2em), translateX(-10em);
   transition-duration: 4s;
 }
+
+.card-con {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: .6em;
+  border-radius: .4em;
+  overflow: hidden;
+}
+
+.card-con button {
+  background-color: #e74d6e;
+  width: 2em;
+  height: 2em;
+  border: none;
+  font-size: 1.2em;
+  border-radius: .4em;
+  color: white;
+  transition: all .2s ease-in;
+}
+
+.card-con button::after {
+  content: '+';
+  position: absolute;
+  top: 0;
+  left: 80%;
+  border-radius: .4em;
+  display: block;
+  width: 2em;
+  height: 2em;
+  background-color: white;
+  color: #e74d6e;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 16%;
+  transition: all .2s ease-in;
+}
+
+.card-con button:hover::after {
+  content: '+';
+  transform: translateX(-80%);
+}

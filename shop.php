@@ -58,12 +58,12 @@ foreach ($products['data'] as $product) {
 
         <div class="col-sm-6 col-md-4 col-lg-3">
           <div class="box">
-            <a href="">
+            <!-- <a href=""> -->
 
 <?php
 $image = $product['image'] != null ? MediaAsset::assets($product['image']) : MediaAsset::assets('images/gifts.png');
 ?>
-
+            <a href="">
               <div class="img-box">
                 <img src="<?php echo $image ?>" alt="">
               </div>
@@ -78,12 +78,16 @@ $image = $product['image'] != null ? MediaAsset::assets($product['image']) : Med
                   </span>
                 </h6>
               </div>
+              </a>
+              <div class="card-con">
+                <button onclick="console.log('clicked')">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                </button>
+              </div>
               <!-- <div class="new">
-                <span>
-                  New
-                </span>
+                <button>helo</button>
               </div> -->
-            </a>
+            <!-- </a> -->
           </div>
         </div>
 

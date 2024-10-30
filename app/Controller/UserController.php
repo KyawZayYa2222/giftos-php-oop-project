@@ -21,8 +21,8 @@ class UserController {
         $password = password_hash($request['password'], PASSWORD_DEFAULT);
         $userType = 'user';
 
-        $dataTime = new DateTime();
-        $created_at = $dataTime->getDate("Y-m-d H:i:s");
+        // $dataTime = new DateTime();
+        $created_at = DateTime::getDate("Y-m-d H:i:s");
 
         $sql = "INSERT INTO users (name, email, password, user_type, created_at) 
                 VALUES ('$name', '$email', '$password', '$userType', '$created_at')";

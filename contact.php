@@ -3,9 +3,30 @@ error_reporting(1);
 
 include 'includes/header.php';
 
-// session_start();
+use Rakit\Validation\Validator;
+use App\Controller\ContactController;
 
 $_SESSION['currentpage'] = "contact";
+
+if (isset($_POST['contact_create'])) {
+  $validator = new Validator();
+
+  $validation = $validator->validate($_POST, [
+      'name' => 'required|max:100',
+      'email' => 'required|email',
+      'phone' => 'required|min:7|max:20',
+      'message' => 'required|min:2|max:255',
+  ]);
+
+  if($validation->fails()) {
+      $errors = $validation->errors();
+  } else {
+    $contactController = new ContactController();
+    $result = $contactController->store($_POST);
+    echo $result;
+  }
+
+}
 ?>
 
 
@@ -38,11 +59,58 @@ $_SESSION['currentpage'] = "contact";
           </div>
         </div>
         <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
-            <div>
+          <form action="#" method="POST">
+            <!-- <div>
               <input type="text" placeholder="Name" />
+            </div> -->
+            <!-- Name  -->
+            <div class="">
+              <?php
+              if(isset($errors) && $nameErr = $errors->first('name')) {
+                  echo "<small class='text-danger'>$nameErr</small>";
+              }
+              ?>
+                  <input type="text" name="name" 
+                  class="<?php if(isset($errors) && $nameErr = $errors->first('name')) {echo 'border-danger';} ?>" 
+                  placeholder="Name">
             </div>
-            <div>
+
+            <!-- Email  -->
+            <div class="">
+              <?php
+              if(isset($errors) && $emailErr = $errors->first('email')) {
+                  echo "<small class='text-danger'>$emailErr</small>";
+              }
+              ?>
+                  <input type="email" name="email" 
+                  class="<?php if(isset($errors) && $emailErr = $errors->first('email')) {echo 'border-danger';} ?>" 
+                  placeholder="Email">
+            </div>
+
+            <!-- Message  -->
+            <div class="">
+              <?php
+              if(isset($errors) && $phoneErr = $errors->first('phone')) {
+                  echo "<small class='text-danger'>$phoneErr</small>";
+              }
+              ?>
+                  <input type="text" name="phone" 
+                  class="<?php if(isset($errors) && $phoneErr = $errors->first('phone')) {echo 'border-danger';} ?>" 
+                  placeholder="Phone">
+            </div>
+
+            <!-- Message  -->
+            <div class="">
+              <?php
+              if(isset($errors) && $mesgErr = $errors->first('message')) {
+                  echo "<small class='text-danger'>$mesgErr</small>";
+              }
+              ?>
+                  <input type="text" name="message" 
+                  class="message-box <?php if(isset($errors) && $mesgErr = $errors->first('message')) {echo 'border-danger';} ?>" 
+                  placeholder="Message">
+            </div>
+            <!-- <div>
               <input type="email" placeholder="Email" />
             </div>
             <div>
@@ -50,9 +118,9 @@ $_SESSION['currentpage'] = "contact";
             </div>
             <div>
               <input type="text" class="message-box" placeholder="Message" />
-            </div>
+            </div> -->
             <div class="d-flex ">
-              <button>
+              <button type="submit" name="contact_create">
                 SEND
               </button>
             </div>
