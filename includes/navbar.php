@@ -45,8 +45,18 @@ $menuPages = ['index' => 'Home', 'shop' => 'Shop', 'why' => 'Why Us', 'contact' 
                 Profile
               </span>
             </a>
+
             <a href="cart.php">
+              <div class="cart-icon">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              <span id="cart-item-count">
+              <?php
+                $carts = isset($_SESSION['carts']) ? $_SESSION['carts'] : [];
+                $count = count($carts);
+                echo $count;
+              ?>
+              </span>
+              </div>
             </a>
             <?php } else { ?>
               <a href="login.php">

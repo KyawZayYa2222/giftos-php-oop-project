@@ -975,6 +975,7 @@ a:focus {
 }
 
 .card-con button {
+  outline: none;
   background-color: #e74d6e;
   width: 2em;
   height: 2em;
@@ -1005,4 +1006,23 @@ a:focus {
 .card-con button:hover::after {
   content: '+';
   transform: translateX(-80%);
+}
+
+.cart-icon {
+  position: relative;
+  width: 2em;
+  /* height: 2em; */
+}
+
+.cart-icon span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #e74d6e;
+  color: white;
+  font-size: .8em;
+  text-align: center;
 }

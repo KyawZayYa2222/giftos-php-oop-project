@@ -86,6 +86,27 @@
 
   <!-- end info section -->
 
+  <!-- add to cart  -->
+  <script>
+    function addToCart (id, action) {
+      $.ajax({
+        url: "../addToCart.php",
+        type: 'POST',
+        data: {
+          action: action,
+          id: id
+        },
+        success: function(resp) {
+          let count = JSON.parse(resp).length;
+          $('#cart-item-count').html(count);
+        },
+        error: function(err) {
+          console.log(err)
+        }
+      })
+    }
+  </script>
+
 <script src="assets/js/jquery-3.4.1.min.js"></script>
   <script src="assets/js/bootstrap.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
