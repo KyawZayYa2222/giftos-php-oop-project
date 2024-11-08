@@ -80,7 +80,7 @@ $image = $product['image'] != null ? MediaAsset::assets($product['image']) : Med
               </div>
               </a>
               <div class="card-con">
-                <button onclick="addToCart(<?php echo $product['id'] ?>, 'add')">
+                <button onclick="actionToCart(<?php echo $product['id'] ?>, 'add')">
                 <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                 </button>
               </div>

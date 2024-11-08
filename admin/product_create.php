@@ -15,9 +15,9 @@ if(!Auth::check()) {
     header("Location: login.php");
     exit();
 }
-if(Auth::user()->user_type !== 'admin') {
-    header("Location: index.php");
-}
+// if(Auth::user()->userType !== 'admin') {
+//     header("Location: index.php");
+// }
 
 $_SESSION['admin_current_page'] = 'product_create';
 

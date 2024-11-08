@@ -1021,8 +1021,83 @@ a:focus {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #e74d6e;
+  background-color: #fc5579;
   color: white;
   font-size: .8em;
   text-align: center;
+}
+
+.checkout-header {
+  background: #6929A5;
+  color: white;
+  margin-top: 1.5em;
+  padding: 1em;
+  margin-left: 1.3em;
+  margin-right: 1.3em;
+  /* height: 100px; */
+}
+
+.checkout-header ul {
+  padding: 0;
+}
+
+.checkout-header ul li {
+  display: block;
+  text-decoration: none;
+}
+
+.number-toggler {
+  width: fit-content;
+  height: 36px;
+  display: flex;
+  padding: .6em;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.number-toggler input {
+  width: 2em;
+  height: 100%;
+  padding: 0;
+  text-align: center;
+}
+
+.number-toggler button {
+  display: block;
+  margin: 0;
+  padding-top: .4em;
+  padding-left: .6em;
+  padding-right: .6em;
+}
+
+/* .cart-item-remove-btn {
+  display: block;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+  color: #fc5579 !important;
+} */
+
+.payment-type {
+  display: flex;
+}
+
+.payment-type-input {
+  margin-right: .8em;
+}
+
+.payment-type-input label {
+  font-size: 2.2em;
+  color: #6929a5;
+  cursor: pointer;
+  transition: all .2s ease-in;
+}
+
+.payment-type-input input[type="radio"] {
+  display: none;
+}
+
+.payment-type-input input[type="radio"]:checked + label {
+  color: #db4f66;
 }

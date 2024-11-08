@@ -10,8 +10,8 @@ switch ($_POST['action']) {
         $response = $cartController->add($_POST);
         break;
     
-    case 'minus':
-        $response = $cartController->minus($_POST);
+    case 'reduce':
+        $response = $cartController->reduce($_POST);
         break;
         
     case 'remove':

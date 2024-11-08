@@ -3,11 +3,16 @@
 require_once '../vendor/autoload.php';
 
 use Dotenv\Dotenv;
+use App\Helper\Auth;
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
 $dotenv->load();
 
 session_start();
+
+if(Auth::user()->userType !== 'admin') {
+    header("Location: index.php");
+}
 ?>
 
 

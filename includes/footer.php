@@ -88,7 +88,7 @@
 
   <!-- add to cart  -->
   <script>
-    function addToCart (id, action) {
+    function actionToCart (id, action) {
       $.ajax({
         url: "../addToCart.php",
         type: 'POST',
@@ -97,13 +97,39 @@
           id: id
         },
         success: function(resp) {
+          console.log(resp)
           let count = JSON.parse(resp).length;
           $('#cart-item-count').html(count);
+          
+          let totalQty = 0;
+          let totalCost = 0;
+          for (let i = 0; i < count; i++) {
+            let item = JSON.parse(resp)[i];
+            let input = $(`#cart-item-input-${item.id}`);
+            input.val(item.cart_qty);
+            totalQty += item.cart_qty;
+            totalCost += item.price * item.cart_qty;
+          }
+
+          $('#cart-total-qty').html(totalQty);
+          $('#cart-total-count').html(count);
+          $('#cart-total-cost').html(totalCost+'$');
+          // $('#cart-total-price').html(total);
+
+          if(count == 0) {
+            $('#cart-item-list').html('<p class="text-center text-secondary h3 mt-4">Your cart is empty.</p>');
+          }
         },
         error: function(err) {
           console.log(err)
         }
       })
+    }
+
+    function removeCart (id, action) {
+      actionToCart(id, action);
+      let item = $(`#cart-item-${id}`);
+      item.remove();
     }
   </script>
 
