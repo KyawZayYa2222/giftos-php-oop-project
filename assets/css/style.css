@@ -1101,3 +1101,51 @@ a:focus {
 .payment-type-input input[type="radio"]:checked + label {
   color: #db4f66;
 }
+
+.profile-detail-section {
+  position: relative !important;
+}
+
+.profile-detail-section .profile-detail-con {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.profile-action nav ul {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.profile-action nav ul li {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  padding: 1em;
+  background-color: #FC5579;
+  text-align: center;
+  transition: all .2s ease-in;
+}
+
+.profile-action nav ul .active-nav {
+  border-top: 2px solid #FC5579;
+}
+
+.profile-action nav ul li:hover {
+  background-color: #e74d6e;
+}
+
+
+.profile-action nav ul li a {
+  color: white;
+}
+
+.file-input {
+  display: inline-block;
+  padding: .5em;
+  height: auto !important;
+  background-color: rgb(247, 244, 244) !important;
+}

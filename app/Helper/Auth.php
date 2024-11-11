@@ -6,11 +6,11 @@ use App\Helper\User;
 class Auth {
     private static $userInstance;
 
-    function __construct() {
+    public function __construct() {
         session_start();
     }
 
-
+    
     // get authenicated user data 
     public static function user() {
         if(!isset($userInstance)) {

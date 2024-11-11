@@ -9,7 +9,7 @@ use App\Controller\CartController;
 use App\Helper\Auth;
 
 $_SESSION['currentpage'] = "cart";
-// session_unset();
+session_unset();
 
 // Auth check 
 if(!Auth::check()) {

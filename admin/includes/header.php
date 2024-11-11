@@ -10,6 +10,12 @@ $dotenv->load();
 
 session_start();
 
+// Auth check 
+if(!Auth::check()) {
+    header("Location: login.php");
+    exit();
+}
+
 if(Auth::user()->userType !== 'admin') {
     header("Location: index.php");
 }

@@ -4,6 +4,9 @@ namespace App\Controller;
 use App\Database\Connection;
 use App\Helper\DateTime;
 use App\Helper\Auth;
+use Exception;
+use App\Helper\Paginator;
+use App\Helper\FileUpload;
 
 
 class UserController {
@@ -30,8 +33,11 @@ class UserController {
         try {
             $data = $this->connect->query($sql);
             Auth::make([
+                'id' => $this->connect->insert_id,
                 'name' => $name,
                 'email' => $email,
+                'avatar' => null,
+                'shipping_address' => null,
                 'user_type' => $userType,
                 'created_at' => $created_at
             ]);
@@ -56,8 +62,11 @@ class UserController {
             // return $user;
             if(password_verify($password, $user['password'])) {
                 Auth::make([
+                    'id' => $user['id'],
                     'name' => $user['name'],
                     'email' => $user['email'],
+                    'avatar' => $user['avatar'],
+                    'shipping_address' => $user['shipping_address'],
                     'user_type' => $user['user_type'],
                     'created_at' => $user['created_at'],
                     'avatar' => $user['avatar']
@@ -79,6 +88,37 @@ class UserController {
         }
     }
 
+    // update user details 
+    public function update($request, $files) {
+        $user = Auth::user();           
+
+        // store image 
+        $avatar = isset($_FILES['image']) ? $this->UploadImage($files) : $user->avatar;
+
+        $id = $user->id;
+        $name = $request['name'];
+        $email = $request['email'];
+        $shippingAddress = $request['shipping_address'];
+
+        $sql = "UPDATE users SET name='$name', email='$email', avatar='$avatar', shipping_address='$shippingAddress' WHERE id='$id'";
+
+        try {
+            $this->connect->query($sql);
+
+            $user->update([
+                'name' => $name,
+                'email' => $email,
+                'avatar' => $avatar,
+                'shipping_address' => $shippingAddress
+            ]);
+
+            header("Location: profile.php?active-section=edit");
+            // echo "<div class='success-alert'>Category created successful.</div>";
+        } catch (Exception $err) {
+            echo "<div class='err-exception-con'>$err</div>";
+        }
+    }
+
 
     // check email exist 
     public function checkEmailExist($email) {
@@ -87,6 +127,22 @@ class UserController {
         $data = $this->connect->query($sql);
         $check = $data->num_rows > 0 ? true : false; 
         return $check;
+    }
+
+
+    // upload image 
+    private function UploadImage($files, $oldFile = null) {
+        $image = '';
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+            $check = getimagesize($files["image"]["tmp_name"]);
+            if($check !== false) {
+                $dir = 'images/user_images/';
+                $fileUpload = new FileUpload($dir, $files['image'], $oldFile);
+                $image = $fileUpload->upload();
+            }
+        }
+
+        return $image;
     }
 
 }

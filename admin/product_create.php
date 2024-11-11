@@ -10,14 +10,6 @@ use App\Controller\ProductController;
 use Rakit\Validation\Validator;
 use App\Helper\Auth;
 
-// Auth check 
-if(!Auth::check()) {
-    header("Location: login.php");
-    exit();
-}
-// if(Auth::user()->userType !== 'admin') {
-//     header("Location: index.php");
-// }
 
 $_SESSION['admin_current_page'] = 'product_create';
 
@@ -32,7 +24,7 @@ if (isset($_POST['product_create'])) {
         'name' => 'required|min:2|max:100',
         'price' => 'required|numeric',
         'qty' => 'required|integer',
-        'image' => 'nullable|uploaded_file:0,1024k,png,jpeg'
+        'image' => 'nullable|uploaded_file:0,1024k,png,jpeg,jpg,gif,svg',
     ]);
 
     if($validation->fails())  {

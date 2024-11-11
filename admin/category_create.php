@@ -6,14 +6,6 @@ use App\Controller\CategoryController;
 use Rakit\Validation\Validator;
 use App\Helper\Auth;
 
-// Auth check 
-if(!Auth::check()) {
-    header("Location: login.php");
-    exit();
-}
-// if(Auth::user()->userType !== 'admin') {
-//     header("Location: index.php");
-// }
 
 $_SESSION['admin_current_page'] = 'category_create';
 

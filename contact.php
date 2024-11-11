@@ -110,15 +110,6 @@ if (isset($_POST['contact_create'])) {
                   class="message-box <?php if(isset($errors) && $mesgErr = $errors->first('message')) {echo 'border-danger';} ?>" 
                   placeholder="Message">
             </div>
-            <!-- <div>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div>
-              <input type="text" placeholder="Phone" />
-            </div>
-            <div>
-              <input type="text" class="message-box" placeholder="Message" />
-            </div> -->
             <div class="d-flex ">
               <button type="submit" name="contact_create">
                 SEND

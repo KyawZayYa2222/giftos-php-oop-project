@@ -39,7 +39,7 @@ $menuPages = ['index' => 'Home', 'shop' => 'Shop', 'why' => 'Why Us', 'contact' 
           <div class="user_option">
 
           <?php if(Auth::check()) {?>
-            <a href="profile.php">
+            <a href="profile.php?active-section=edit">
               <i class="fa fa-user" aria-hidden="true"></i>
               <span>
                 Profile

@@ -29,6 +29,12 @@ class FileUpload {
                 break;
             }
         }
+        // $this->targetDir = $assetDir. $this->targetDir;
+
+        if($assetDir === '') {
+            throw new Exception("Fail getting assets directory");
+            exit();
+        }
 
         // delete old file
         // this is for update {optional}
@@ -41,8 +47,8 @@ class FileUpload {
         // $extension = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
         // move file to target dir 
-        try {
-            if(!is_dir($this->targetDir)) {
+        // try {
+            if(!is_dir($assetDir. $this->targetDir)) {
                 if(!mkdir($this->targetDir, 0777, true)) {
                     throw new Exception("Fail creating directory");
                 }
@@ -57,8 +63,8 @@ class FileUpload {
 
                 return $this->targetDir . $this->file['name'];
             }
-        } catch(Exception $err) {
-            echo "<div class='err-exception-con'>$err->getMessage()</div>";
-        }
+        // } catch(Exception $err) {
+        //     echo "<div class='err-exception-con'>$err->getMessage()</div>";
+        // }
     }
 }
