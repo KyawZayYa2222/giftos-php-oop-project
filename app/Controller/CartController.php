@@ -21,14 +21,17 @@ class CartController {
         // get item details 
         $productController = new ProductController();
         $product = $productController->find($id)->fetch_assoc();
-        // return $product;
+
+        if($product['qty'] === 0) {
+            return json_encode(['error' => 'Item is out of stock']);
+        }
 
         if(empty($carts) || empty($existCarts)) {
             $product['cart_qty'] = 1;
             array_push($carts, $product);
         } else {
             $carts = array_map(function($cart) use($id) {
-                if($cart['id'] == $id) {
+                if($cart['id'] == $id && $cart['cart_qty'] < 5) {
                     $cart['cart_qty'] += 1;
                 }
                 return $cart;
@@ -46,7 +49,7 @@ class CartController {
         $carts = isset($_SESSION['carts'])? $_SESSION['carts'] : [];
 
         $carts = array_map(function($cart) use($id) {
-            if($cart['id'] == $id && $cart['qty'] > 1) {
+            if($cart['id'] == $id && $cart['cart_qty'] > 1) {
                 $cart['cart_qty'] -= 1;
             }
             return $cart;

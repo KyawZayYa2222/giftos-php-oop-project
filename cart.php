@@ -7,9 +7,11 @@ use Rakit\Validation\Validator;
 use App\Helper\MediaAsset;
 use App\Controller\CartController;
 use App\Helper\Auth;
+use App\Controller\OrderController;
 
 $_SESSION['currentpage'] = "cart";
-session_unset();
+// print_r($_SESSION['carts']);
+// session_unset();
 
 // Auth check 
 if(!Auth::check()) {
@@ -30,6 +32,13 @@ $totalCost = array_sum(array_map(function($cart) {
   return $cart['price'] * $cart['cart_qty'];
 }, $cartItems));
 // print_r($cartItems);
+
+// checkout and order 
+if(isset($_POST['checkout'])) {
+  $orderController = new OrderController();
+  $result = $orderController->store($_POST);
+  print_r($result);
+}
 ?>
 
 
@@ -46,11 +55,6 @@ $totalCost = array_sum(array_map(function($cart) {
 
   <section class="contact_section layout_padding">
     <div class="container px-0">
-      <!-- <div class="heading_container ">
-        <h2 class="">
-          Contact Us
-        </h2>
-      </div> -->
     </div>
     <div class="container container-bg">
       <div class="row">
@@ -127,31 +131,31 @@ $totalCost = array_sum(array_map(function($cart) {
               foreach ($payments as $payment => $icon) {
               ?>
               <div class="payment-type-input">
-                <input type="radio" class="radio-input" name="payment-type" <?php if($payment === 'visa') {echo 'checked';} ?> id="<?php echo $payment ?>">
+                <input type="radio" class="radio-input" name="payment_type" <?php if($payment === 'visa') {echo 'checked';} ?> id="<?php echo $payment ?>">
                 <label for="<?php echo $payment ?>"><?php echo $icon ?></label>
               </div>
               <?php }?>
             </div>
 
             <div class="">
-                  <input type="text" name="name"  placeholder="Name on card">
+                  <input type="text" name="name"  placeholder="Name on card" required>
             </div>
 
             <div class="">
-                  <input type="text" name="card_no"  placeholder="Card number">
+                  <input type="text" name="card_no"  placeholder="Card number" required>
             </div>
 
             <div class="d-flex">
-                  <input type="text" name="expired_date" placeholder="Expired date">
-                  <input type="text" name="security_code" placeholder="Security code">
+                  <input type="text" name="expired_date" placeholder="Expired date" required>
+                  <input type="text" name="security_code" placeholder="Security code" required>
             </div>
 
             <div class="">
-                  <input type="text" name="zip_code"  placeholder="ZIP/Postal code">
+                  <input type="text" name="zip_code"  placeholder="ZIP/Postal code" required>
             </div>
             
             <div class="d-flex">
-              <button type="submit" class="w-100 mt-2" name="contact_create">
+              <button type="submit" class="w-100 mt-2" name="checkout">
                 Checkout Now
               </button>
             </div>

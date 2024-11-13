@@ -120,6 +120,38 @@ class UserController {
     }
 
 
+    // update password
+    public function updatePassword($request) {
+        $id = Auth::user()->id;
+        $oldPassword = $request['old_password'];
+        $newPassword = $request['new_password'];
+
+        $sql = "SELECT * FROM users WHERE id='$id'";
+        $query = $this->connect->query($sql);
+
+        if($query->num_rows > 0) {
+            $user = $query->fetch_assoc();
+            // return $user;
+            if(password_verify($oldPassword, $user['password'])) {
+                $password = password_hash($newPassword, PASSWORD_DEFAULT);
+                $sql = "UPDATE users SET password='$password' WHERE id='$id'";
+                $this->connect->query($sql);
+
+                if(Auth::logout()) {
+                    header("Location: login.php");
+                    exit();
+                };
+            } else {
+                return [
+                  'success' => false,
+                  'message' => "Wrong Credentials. Please try again."
+                ];
+            }
+        }
+
+    }
+
+
     // check email exist 
     public function checkEmailExist($email) {
         $sql = "SELECT * FROM users WHERE email='$email'";

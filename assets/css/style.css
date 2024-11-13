@@ -1104,6 +1104,7 @@ a:focus {
 
 .profile-detail-section {
   position: relative !important;
+  min-height: 600px;
 }
 
 .profile-detail-section .profile-detail-con {
@@ -1149,3 +1150,14 @@ a:focus {
   height: auto !important;
   background-color: rgb(247, 244, 244) !important;
 }
+
+#logout-btn {
+  width: auto;
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  border-radius: 2em;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+}
+  

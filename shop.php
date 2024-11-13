@@ -80,14 +80,15 @@ $image = $product['image'] != null ? MediaAsset::assets($product['image']) : Med
               </div>
               </a>
               <div class="card-con">
-                <button onclick="actionToCart(<?php echo $product['id'] ?>, 'add')">
-                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                </button>
+                <?php if($product['qty'] === 0) { 
+                  echo `<span class="badge text-white bg-danger">Stock out</span>`;
+                } else {
+                  echo "<button onclick=\"actionToCart({$product['id']}, 'add')\">
+                        <i class=\"fa fa-shopping-bag\" aria-hidden=\"true\"></i>
+                        </button>";
+                }
+                ?>
               </div>
-              <!-- <div class="new">
-                <button>helo</button>
-              </div> -->
-            <!-- </a> -->
           </div>
         </div>
 

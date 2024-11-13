@@ -21,15 +21,13 @@ if(isset($_GET['active-section'])) {
   $_SESSION['active-section'] = $_GET['active-section'];
 }
 
-// print_r($_SESSION['user']);
 $user = Auth::user();
-// $user->name ="helo";
-// var_dump($user);
-// die();
+$validator = new Validator();
+$userController = new UserController();
 
+
+// Update Profile
 if(isset($_POST['profile_update'])) {
-  $validator = new Validator();
-
   $validation = $validator->validate($_POST + $_FILES, [
       'name' =>'required|min:3|max:100',
       'email' =>'required|email',
@@ -40,11 +38,31 @@ if(isset($_POST['profile_update'])) {
   if($validation->fails()) {
       $errors = $validation->errors();
   } else {
-      $userController = new UserController();
       $userController->update($_POST, $_FILES);
-      // header("Location: profile.php");
-      // exit();  
   }
+}
+
+// Change Password 
+if (isset($_POST['change_password'])) {
+  $validation = $validator->validate($_POST, [
+      'old_password' => 'required',
+      'new_password' => 'required|min:6',
+      'confirm_new_password' => 'required|same:new_password|min:6',
+  ]);
+
+  if($validation->fails())  {
+      $errors = $validation->errors();
+  } else {
+      $result = $userController->updatePassword($_POST);
+  }
+
+}
+
+// Logout 
+if (isset($_POST['logout'])) {
+  Auth::logout();
+  header("Location: login.php");
+  exit();
 }
 ?>
 
@@ -62,11 +80,6 @@ if(isset($_POST['profile_update'])) {
 
   <section class="contact_section layout_padding">
     <div class="container px-0">
-      <!-- <div class="heading_container ">
-        <h2 class="">
-          Contact Us
-        </h2>
-      </div> -->
     </div>
     <div class="container container-bg">
       <div class="row">
@@ -74,7 +87,7 @@ if(isset($_POST['profile_update'])) {
           <div class="map_container">
             <div class="map-responsive">
                 <div class="profile-detail-section">
-                    <svg  id="visual" viewBox="0 0 675 900" width="auto" height="auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="675" height="900" fill="#FFFFFF"></rect><path d="M301 900L330.5 862.5C360 825 419 750 414.5 675C410 600 342 525 314.3 450C286.7 375 299.3 300 339.8 225C380.3 150 448.7 75 482.8 37.5L517 0L675 0L675 37.5C675 75 675 150 675 225C675 300 675 375 675 450C675 525 675 600 675 675C675 750 675 825 675 862.5L675 900Z" fill="#FC5579" stroke-linecap="round" stroke-linejoin="miter"></path></svg>
+                    <svg class="d-none d-md-block"  id="visual" viewBox="0 0 675 900" width="auto" height="auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="675" height="900" fill="#FFFFFF"></rect><path d="M301 900L330.5 862.5C360 825 419 750 414.5 675C410 600 342 525 314.3 450C286.7 375 299.3 300 339.8 225C380.3 150 448.7 75 482.8 37.5L517 0L675 0L675 37.5C675 75 675 150 675 225C675 300 675 375 675 450C675 525 675 600 675 675C675 750 675 825 675 862.5L675 900Z" fill="#FC5579" stroke-linecap="round" stroke-linejoin="miter"></path></svg>
                     <div class="profile-detail-con p-5">
                       <?php
                       if($user->avatar != null && $user->avatar != "" ) {
@@ -97,6 +110,10 @@ if(isset($_POST['profile_update'])) {
                         <p class="text-secondary">
                         <?php echo $user->shipping_address ?>
                         </p>
+                        <form action="" method="POST">
+                          <button id="logout-btn" type="submit" name="logout">
+                          <i class="fa fa-sign-out mr-2"></i>Logout</button>
+                        </form>
                         </div>
                     </div>
                 </div>

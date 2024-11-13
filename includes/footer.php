@@ -98,26 +98,29 @@
         },
         success: function(resp) {
           console.log(resp)
-          let count = JSON.parse(resp).length;
-          $('#cart-item-count').html(count);
-          
-          let totalQty = 0;
-          let totalCost = 0;
-          for (let i = 0; i < count; i++) {
-            let item = JSON.parse(resp)[i];
-            let input = $(`#cart-item-input-${item.id}`);
-            input.val(item.cart_qty);
-            totalQty += item.cart_qty;
-            totalCost += item.price * item.cart_qty;
-          }
+          if(resp.error) {
+            alert(resp.message);
+          } else {
+            let count = JSON.parse(resp).length;
+            $('#cart-item-count').html(count);
+            
+            let totalQty = 0;
+            let totalCost = 0;
+            for (let i = 0; i < count; i++) {
+              let item = JSON.parse(resp)[i];
+              let input = $(`#cart-item-input-${item.id}`);
+              input.val(item.cart_qty);
+              totalQty += item.cart_qty;
+              totalCost += item.price * item.cart_qty;
+            }
 
-          $('#cart-total-qty').html(totalQty);
-          $('#cart-total-count').html(count);
-          $('#cart-total-cost').html(totalCost+'$');
-          // $('#cart-total-price').html(total);
+            $('#cart-total-qty').html(totalQty);
+            $('#cart-total-count').html(count);
+            $('#cart-total-cost').html(totalCost+'$');
 
-          if(count == 0) {
-            $('#cart-item-list').html('<p class="text-center text-secondary h3 mt-4">Your cart is empty.</p>');
+            if(count == 0) {
+              $('#cart-item-list').html('<p class="text-center text-secondary h3 mt-4">Your cart is empty.</p>');
+            }
           }
         },
         error: function(err) {

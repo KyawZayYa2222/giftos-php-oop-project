@@ -11,3 +11,50 @@
         </li>
     </ul>
 </nav>
+
+
+<form action="" method="POST">
+    <!-- message  -->
+    <?php
+        if(isset($result) && $result['success'] === false) {
+            echo "<p class='text-danger mb-2'>". $result['message'] ."</p>";
+        }
+    ?>
+
+    <div class="">
+        <?php
+        if(isset($errors) && $passErr = $errors->first('old_password')) {
+            echo "<small class='text-danger'>$passErr</small>";
+        }
+        ?>
+            <input type="password" name="old_password" 
+            class="<?php if(isset($errors) && $passErr = $errors->first('old_password')) {echo 'border-danger';} ?>" 
+            placeholder="Old Password">
+    </div>
+
+    <div class="">
+    <?php
+    if(isset($errors) && $passErr = $errors->first('new_password')) {
+        echo "<small class='text-danger'>$passErr</small>";
+    }
+    ?>
+        <input type="password" name="new_password" 
+        class="<?php if(isset($errors) && $passErr = $errors->first('new_password')) {echo 'border-danger';} ?>" 
+        placeholder="New Password">
+    </div>
+
+    <div class="">
+    <?php
+    if(isset($errors) && $passErr = $errors->first('confirm_new_password')) {
+        echo "<small class='text-danger'>$passErr</small>";
+    }
+    ?>
+        <input type="password" name="confirm_new_password" 
+        class="<?php if(isset($errors) && $passErr = $errors->first('confirm_new_password')) {echo 'border-danger';} ?>" 
+        placeholder="Confirm New Password">
+    </div>
+
+    <div class="d-flex">
+        <button type="submit" name="change_password">Change Password</button>
+    </div>
+</form>

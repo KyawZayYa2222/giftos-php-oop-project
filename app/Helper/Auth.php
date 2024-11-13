@@ -30,6 +30,14 @@ class Auth {
         }
     }
 
+    // Auth logout
+    public static function logout() {
+        self::$userInstance = null;
+        unset($_SESSION['user']);
+        
+        return true;
+    }
+
 
     // Auth make 
     public static function make(array $userData) {

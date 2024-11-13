@@ -4,9 +4,10 @@ namespace App\Controller;
 use App\Database\Connection;
 use Exception;
 use App\Helper\Paginator;
+use App\Helper\Auth;
+use App\Helper\DateTime;
 
-
-class CategoryController {
+class OrderController {
     private $connect;
 
     function __construct() {
@@ -52,18 +53,44 @@ class CategoryController {
 
     // Store 
     public function store($request) {
-        $name = $request['name'];
+        $invoiceId = "INV" . DateTime::getDate("Y-m-dH:i:s") . rand(100, 999);
+        $payment = $request['payment_type'];
+        $carts = $_SESSION['carts'];
+        $userId = Auth::user()->id;
+        $created_at = DateTime::getDate("Y-m-d H:i:s");
 
-        $sql = "INSERT INTO categories (name) VALUES ('$name')";
-
-        try {
-            $this->connect->query($sql);
-            header("Location: category.php");
-            // echo "<div class='success-alert'>Category created successful.</div>";
-            exit();
-        } catch (Exception $err) {
-            echo "<div class='err-exception-con'>$err</div>";
+        $values = [];
+        $sql = "INSERT INTO orders (invoice_id, product_id, user_id, qty, price, total_cost, shipping_address, payment_type, created_at) VALUES ";
+        if(isset($carts) && !empty($carts)) {
+            foreach ($carts as $cart) {
+                $totalCost = $cart['price'] * $cart['cart_qty'];
+                $values[] = "('$invoiceId', '$cart[id]', '$userId', '$cart[cart_qty]', '$cart[price]', '$totalCost', '$cart[shipping_address]', '$payment', '$created_at)";
+            }
         }
+
+        // to be continued ....
+
+
+        // if(!empty($values)) {
+        //     $sql.= implode(', ', $values);
+        //     try {
+        //         $result = $this->connect->query($sql);
+        //         if($result) {
+        //             // reduce the qty of product in the database 
+        //             foreach ($carts as $cart) {
+        //                 $sql = "UPDATE products SET qty=qty-'$cart[cart_qty]' WHERE id='$cart[id]'";
+        //                 $this->connect->query($sql);
+        //             }
+    
+        //         }
+        //         unset($_SESSION['carts']);
+        //         header("Location: orders.php");
+        //         exit();
+        //     } catch (Exception $err) {
+        //         echo "<div class='err-exception-con'>$err</div>";
+        //     }
+        // }
+        
     }
 
 
