@@ -7,6 +7,7 @@ use App\Helper\Auth;
 use Exception;
 use App\Helper\Paginator;
 use App\Helper\FileUpload;
+use App\Helper\ThrowError;
 
 
 class UserController {
@@ -85,6 +86,43 @@ class UserController {
                 'success' => false,
                 'message' => "Email does not exist."
             ];
+        }
+    }
+
+    // Get 
+    public function get(int $page=1) {
+        $sql = "SELECT * FROM users";
+        $limit = 15;
+
+        $data = Paginator::paginate($this->connect, $sql, $limit, $page);
+        return $data;
+    }
+
+    // Search 
+    public function search($search='') {
+        $sql = "SELECT * FROM users WHERE name LIKE '%$search%'
+                OR email LIKE '%$search%'
+                OR phone LIKE '%$search%'
+                OR shipping_address LIKE '%$search%'";
+
+        try {
+            $data = $this->connect->query($sql);
+            return [
+                'data' => $data
+            ];
+        } catch (Exception $err) {
+            ThrowError::error($err);
+        }
+    }
+
+    // Find 
+    public function find($id) {
+        try {
+            $sql = "SELECT * FROM users WHERE users.id = '$id'";
+            $data = $this->connect->query($sql);
+            return $data;
+        } catch (Exception $err) {
+            ThrowError::error($err);
         }
     }
 

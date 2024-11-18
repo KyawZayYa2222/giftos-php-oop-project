@@ -21,7 +21,7 @@ $dotenv->load();
     <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
     </div>
-    <div class="sidebar-brand-text ;mx-3"> <?php echo $_ENV['APP_NAME'] ?> </div>
+    <div class="sidebar-brand-text ;mx-3 text-white"> <?php echo $_ENV['APP_NAME'] ?> </div>
 </a>
 
 <!-- Divider -->
@@ -69,11 +69,29 @@ $dotenv->load();
     </div>
 </li>
 
-<hr class="sidebar-divider">
+<hr class="sidebar-divider mb-1">
+
+<li class="nav-item <?php if($currentPage === 'order' || $currentPage === 'order_detail') echo 'active'; ?>">
+    <a class="nav-link" href="/admin/order.php">
+        <i class="fa fa-dollar"></i>
+        <span>Order</span></a>
+</li>
+
+<hr class="sidebar-divider mb-1">
+
+<li class="nav-item <?php if($currentPage === 'customer') echo 'active'; ?>">
+    <a class="nav-link" href="/admin/customer.php">
+        <i class="fa fa-users"></i>
+        <span>Customer</span></a>
+</li>
+
+<hr class="sidebar-divider mb-1">
 
 <!-- Sidebar Toggler (Sidebar) -->
-<div class="text-center d-none d-md-inline">
-    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+<div class="text-center d-none d-md-inline mt-5">
+    <button class="rounded-circle border-0" id="sidebarToggle">
+        <i class="fa fa-bars text-light"></i>
+    </button>
 </div>
 
 

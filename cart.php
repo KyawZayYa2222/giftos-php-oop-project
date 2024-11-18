@@ -31,13 +31,16 @@ $totalQty = array_sum(array_map(function($cart) {
 $totalCost = array_sum(array_map(function($cart) {
   return $cart['price'] * $cart['cart_qty'];
 }, $cartItems));
-// print_r($cartItems);
 
 // checkout and order 
 if(isset($_POST['checkout'])) {
   $orderController = new OrderController();
   $result = $orderController->store($_POST);
-  print_r($result);
+  // print_r($result);
+  if(!$result['success']) {
+    $message = $result['message'];
+    echo "<script type='text/javascript'>alert('$message');</script>";
+  }
 }
 ?>
 
@@ -131,7 +134,7 @@ if(isset($_POST['checkout'])) {
               foreach ($payments as $payment => $icon) {
               ?>
               <div class="payment-type-input">
-                <input type="radio" class="radio-input" name="payment_type" <?php if($payment === 'visa') {echo 'checked';} ?> id="<?php echo $payment ?>">
+                <input type="radio" class="radio-input" name="payment_type" <?php echo ($payment === 'visa') ? 'checked' : ''; ?> id="<?php echo $payment ?>" value="<?php echo $payment ?>">
                 <label for="<?php echo $payment ?>"><?php echo $icon ?></label>
               </div>
               <?php }?>
