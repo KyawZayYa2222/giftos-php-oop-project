@@ -65,7 +65,7 @@ $menuPages = ['index' => 'Home', 'shop' => 'Shop', 'why' => 'Why Us', 'contact' 
                   Login
                 </span>
               </a>
-              <a href="cart.php">
+              <a href="login.php">
                 <i class="fa fa-shopping-bag" aria-hidden="true"></i>
               </a>
             <?php } ?>

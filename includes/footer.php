@@ -90,9 +90,10 @@
   <script>
     function actionToCart (id, action) {
       $.ajax({
-        url: "../addToCart.php",
+        url: "../ajaxHandler.php",
         type: 'POST',
         data: {
+          controller: 'addToCart',
           action: action,
           id: id
         },
@@ -134,6 +135,9 @@
       let item = $(`#cart-item-${id}`);
       item.remove();
     }
+
+
+    
   </script>
 
 <script src="assets/js/jquery-3.4.1.min.js"></script>

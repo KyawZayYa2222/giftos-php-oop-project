@@ -5,30 +5,30 @@ error_reporting(E_ALL);
 
 include './includes/header.php';
 
-use App\Controller\ProductController;
+use App\Controller\ContactController;
 use App\Helper\MediaAsset;
 use App\Helper\Auth;
 
 
-$_SESSION['admin_current_page'] = 'product';
+$_SESSION['admin_current_page'] = 'contact';
 
-$productController = new ProductController();   
+$contactController = new ContactController();   
 
 if (isset($_GET['page'])) {
-    $products = $productController->get($_GET['page']);
+    $contacts = $contactController->get($_GET['page']);
 } else {
-    $products = $productController->get();
+    $contacts = $contactController->get();
 }
 
 // search 
 if(isset($_GET['search'])) {
-    $products = $productController->search($_GET['search']);
+    $contacts = $contactController->search($_GET['search']);
 }
 
 // delete 
-if(isset($_POST['delete'])) {
-    $productController->delete($_POST);
-}
+// if(isset($_POST['delete'])) {
+//     $contactController->delete($_POST);
+// }
 ?>
 
 
@@ -52,8 +52,8 @@ include './includes/topbar.php';
 
 <!-- Page Heading -->
 <div class="d-flex mb-2 justify-content-between">
-    <h1 class="h3 text-gray-800">Product</h1>
-    <a href="/admin/product_create.php" class="btn btn-primary">Create</a>
+    <h1 class="h3 text-gray-800">Contact</h1>
+    <!-- <a href="/admin/product_create.php" class="btn btn-primary">Create</a> -->
 </div>
 
 <!-- DataTales Example -->
@@ -79,44 +79,42 @@ include './includes/topbar.php';
                 <thead>
                     <tr>
                         <th width="80px">No</th>
-                        <th>Product</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th width="240px">Actions</th>
-                        <!-- <th>Start d/ate</th>
-                        <th>Salary</th> -->
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th width="320px">Message</th>
+                        <th>Status</th>
+                        <th width="200px">Date</th>
+                        <th width="60px">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
 <?php
-    foreach ($products['data'] as $key => $product) {
+    foreach ($contacts['data'] as $key => $contact) {
         $no = $key + 1;
-        $id = $product['id'];
-        $name = htmlspecialchars($product['name'] ?? '');
-        $category = htmlspecialchars($product['category_name'] ?? '');
-        $price = htmlspecialchars($product['price'] ?? '');
-        $qty = htmlspecialchars($product['qty'] ?? '');
-        $image = $product['image'] != null ? MediaAsset::assets($product['image']) : MediaAsset::assets('images/gifts.png');
+        $id = $contact['id'];
+        $name = htmlspecialchars($contact['name'] ?? '');
+        $email = htmlspecialchars($contact['email'] ?? '');
+        $phone = htmlspecialchars($contact['phone'] ?? '09 __');
+        $message = htmlspecialchars($contact['message'] ?? '__');
 
         echo "<tr>
                 <td>$no</td>
+                <td> $name </td>
+                <td>$email</td>
+                <td>$phone</td>
                 <td>
-                <span class='table-icon-img mr-2'>
-                    <img src='$image' alt='image'>
-                </span>
-                $name
+                <p class='text-truncate' style='width: 300px !important;'>
+                lorem isjhd hehehhehehe hh hshil uou orange apple this is a sentences and I forgot
+                </p>
                 </td>
-                <td>$category</td>
-                <td>$price</td>
-                <td>$qty</td>
+                <td>{$contact['status']}</td>
+                <td>{$contact['created_at']}</td>
                 <td>
                 <div class='d-flex'>
-                    <a href='/admin/product_edit.php?id=$id' class='btn btn-sm btn-primary mr-2'>Edit</a>
-                    <form method='POST'>
-                        <input type='hidden' name='id' value='$id'>
-                        <button type='submit' name='delete' class='btn btn-sm btn-danger'>Delete</button>
-                    </form>
+                    <a href='/admin/contact_detail.php?id=$id' class='btn btn-sm btn-primary mr-2'>
+                     <i class='fa fa-eye'></i>
+                    </a>
                 </div>
                 </td>
             </tr>";
@@ -128,8 +126,8 @@ include './includes/topbar.php';
             </table>
 
             <?php 
-        if(isset($products['link'])) {
-            echo $products['link'];
+        if(isset($contact['link'])) {
+            echo $contact['link'];
         }
         ?>
 

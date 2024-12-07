@@ -1,14 +1,13 @@
 <?php
-// include_once './vendor/autoload.php';
 include './includes/header.php';
 
 use App\Controller\OrderController;
 use App\Controller\ProductController;
-use Rakit\Validation\Validator;
-use App\Helper\Auth;
+// use Rakit\Validation\Validator;
+// use App\Helper\Auth;
 
 
-$_SESSION['admin_current_page'] = 'order_deatil';
+// $_SESSION['admin_current_page'] = 'order_deatil';
 
 $orderController = new OrderController();
 
@@ -21,67 +20,22 @@ if($query->num_rows === 0) {
 }
 ?>
 
-
-
-<div id="wrapper">
-<?php
-include './includes/sidebar.php';
-?>
-
-
-<!-- Content Wrapper -->
-<div id="content-wrapper" class="d-flex flex-column">
-
-<!-- Main Content -->
-<div id="content">
-
-<?php
-include './includes/topbar.php';
-?>
-
-<!-- Begin Page Content -->
-<div class="container-fluid">
-
-<!-- Page Heading -->
-<div class="d-flex mb-2 justify-content-between">
-    <h1 class="h3 text-gray-800">Order</h1>
-    <!-- <button type="submit" name="category_edit" class="btn btn-primary">Create</button> -->
-</div>
-
-<!-- DataTales Example -->
-<div class="">
-    <div class="card shadow mb-4 p-3">
-        <div class="row row-cols-md-3 row-cols-1 mb-3">
-            <div class="col">
+<div class="mb-4 p-5">
+    <div class="text-center mb-3">
+        <h1>GIFTOS</h1>
+        <h4>Order Reciepts</h4>
+    </div>
+        <div class="d-flex justify-content-between mb-3">
+            <div>
                 Invoice ID: <strong><?php echo $order['invoice_id'];?></strong><br>
                 Payment Type: <strong><?php echo $order['payment_type'];?></strong><br>
                 Date: <strong><?php echo $order['created_at'];?></strong>
             </div>
-            <div class="col">
+            <div>
                 Customer Name: <strong><?php echo $order['user_name'];?></strong><br>
                 Email: <strong><?php echo $order['user_email'];?></strong><br>
                 Phone: <strong><?php echo $order['user_phone'] != '' ? $order['user_phone'] : '__' ;?></strong><br>
                 Shipping Address: <strong><?php echo $order['shipping_address'] != '' ? $order['shipping_address'] : '__' ;?></strong><br>
-            </div>
-            <div class="col">
-                <div class="d-flex justify-content-between">
-                    <!-- <br> -->
-                    <select class="select-2" id="category_id" name="category_id">
-                    <?php
-                    $status = ['Pending', 'Processing', 'Delivered', 'Canceled'];
-                    foreach ($status as $key => $stat) {
-                        $select = $order['status'] == $stat ? 'selected' : '';
-                        echo "<option value='{$stat}' $select>{$stat}</option>";
-                    }
-                    ?>
-                    </select>
-
-                    <?php $invoiceUrl = 'invoice.php?id=' . $_GET['id']; ?>
-
-                    <button onclick="printInvoice('<?php echo $invoiceUrl; ?>')"  class="btn btn-success">
-                        <i class="fa fa-print"></i>
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -123,22 +77,3 @@ include './includes/topbar.php';
             </table>
         </div>
     </div>
-</div>
-
-
-</div>
-<!-- /.container-fluid -->
-</div>
-<!-- End of Main Content -->
-</div>
-<!-- End of Content Wrapper -->
-</div>
-<!-- End of Page Wrapper -->
-</div>
-</div>
-</div>
-
-
-<?php
-include './includes/footer.php';
-?>

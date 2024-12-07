@@ -123,6 +123,28 @@ class OrderController {
     }
 
 
+    // print order invoice method 
+    public function printInvoice($id) {
+        $sql = "SELECT orders.*, users.name AS user_name, users.email AS user_email,
+                users.phone AS user_phone FROM orders
+                LEFT JOIN users ON orders.user_id = users.id
+                WHERE orders.id='$id'";
+
+        $data = $this->connect->query($sql);
+
+        if($data->num_rows > 0) {
+            $order = $data->fetch_assoc();
+
+            $items = json_decode($order['items'], true);
+
+            // print invoice
+            require_once 'invoice.php';
+        } else {
+            echo "Order not found.";
+        }
+    }
+
+
     // Update 
     // public function update($request) {
     //     $id = $request['id'];

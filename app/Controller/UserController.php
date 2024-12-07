@@ -118,7 +118,7 @@ class UserController {
     // Find 
     public function find($id) {
         try {
-            $sql = "SELECT * FROM users WHERE users.id = '$id'";
+            $sql = "SELECT * FROM users WHERE id = '$id'";
             $data = $this->connect->query($sql);
             return $data;
         } catch (Exception $err) {
@@ -152,6 +152,21 @@ class UserController {
 
             header("Location: profile.php?active-section=edit");
             // echo "<div class='success-alert'>Category created successful.</div>";
+        } catch (Exception $err) {
+            echo "<div class='err-exception-con'>$err</div>";
+        }
+    }
+
+    // Delete 
+    public function delete($request) {
+        $id = $request['id'];
+
+        $sql = "DELETE FROM users WHERE id='$id'";
+
+        try {
+            $this->connect->query($sql);
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit();
         } catch (Exception $err) {
             echo "<div class='err-exception-con'>$err</div>";
         }

@@ -87,6 +87,14 @@ $dotenv->load();
 
 <hr class="sidebar-divider mb-1">
 
+<li class="nav-item <?php if($currentPage === 'contact' || $currentPage == 'contact_detail') echo 'active'; ?>">
+    <a class="nav-link" href="/admin/contact.php">
+        <i class="fa fa-users"></i>
+        <span>Contact</span></a>
+</li>
+
+<hr class="sidebar-divider mb-1">
+
 <!-- Sidebar Toggler (Sidebar) -->
 <div class="text-center d-none d-md-inline mt-5">
     <button class="rounded-circle border-0" id="sidebarToggle">

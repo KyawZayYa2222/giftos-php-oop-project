@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Database\Connection;
 use App\Helper\Paginator;
 use App\Helper\FileUpload;
+use Exception;
 
 class ProductController {
     private $connect;

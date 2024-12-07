@@ -100,13 +100,13 @@ if (isset($_POST['logout'])) {
                         <h3 class="text-secondary my-4"><?php echo $user->name ?></h3>
                         <div class="pt-3">
                         <p class="h6 text-secondary" style="line-height: .3em;">Email</p>
-                        <hr style="height:1px; border-none;background-color: #6e6e6e; line-height: 1em;">
+                        <hr style="height:1px; background-color: #6e6e6e; line-height: 1em;">
                         <p class="text-secondary"><?php echo $user->email ?></p>
                         </div>
 
                         <div class="pt-3">
                         <p class="h6 text-secondary" style="line-height: .3em;">Shipping Address</p>
-                        <hr style="height:1px; border-none;background-color: #6e6e6e; line-height: 1em;">
+                        <hr style="height:1px; background-color: #6e6e6e; line-height: 1em;">
                         <p class="text-secondary">
                         <?php echo $user->shipping_address ?>
                         </p>

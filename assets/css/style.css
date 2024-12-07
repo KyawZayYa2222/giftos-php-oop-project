@@ -925,7 +925,7 @@ a:focus {
 /* common  */
 .err-exception-con {
   display: block;
-  z-index: 1000;
+  z-index: 10000;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -1161,3 +1161,8 @@ a:focus {
   padding-right: 1.2em;
 }
   
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

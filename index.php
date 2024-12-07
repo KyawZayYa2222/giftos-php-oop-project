@@ -59,15 +59,27 @@ $products = $productController->latest();
           <div class="user_option">
 
           <?php if(Auth::check()) {?>
-            <a href="profile.php">
+            <a href="profile.php?active-section=edit">
               <i class="fa fa-user" aria-hidden="true"></i>
               <span>
                 Profile
               </span>
             </a>
             <a href="cart.php">
+              <div class="cart-icon">
               <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              <span id="cart-item-count">
+              <?php
+                $carts = isset($_SESSION['carts']) ? $_SESSION['carts'] : [];
+                $count = count($carts);
+                echo $count;
+              ?>
+              </span>
+              </div>
             </a>
+            <!-- <a href="cart.php">
+              <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+            </a> -->
             <?php } else { ?>
               <a href="login.php">
                 <i class="fa fa-user" aria-hidden="true"></i>
@@ -75,7 +87,7 @@ $products = $productController->latest();
                   Login
                 </span>
               </a>
-              <a href="cart.php">
+              <a href="login.php">
                 <i class="fa fa-shopping-bag" aria-hidden="true"></i>
               </a>
             <?php } ?>
